@@ -1,6 +1,6 @@
 {
   "name": "react-native-send-intent",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React Native Android module to use Android's Intent actions for send text to shareable apps",
   "main": "index.js",
   "scripts": {
