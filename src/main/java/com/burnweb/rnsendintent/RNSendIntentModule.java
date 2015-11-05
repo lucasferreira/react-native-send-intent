@@ -1,0 +1,75 @@
+package com.burnweb.rnsendintent;
+
+import android.content.Intent;
+
+import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.NativeModule;
+import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.ReactContextBaseJavaModule;
+import com.facebook.react.bridge.ReactMethod;
+
+import java.util.Map;
+import java.util.HashMap;
+
+public class RNSendIntentModule extends ReactContextBaseJavaModule {
+
+    private static final String TAG = RNSendIntentModule.class.getSimpleName();
+
+    private static final String TEXT_PLAIN = "text/plain";
+    private static final String TEXT_HTML = "text/html";
+
+    private ReactApplicationContext reactContext;
+
+    public RNSendIntentModule(ReactApplicationContext reactContext) {
+      super(reactContext);
+      this.reactContext = reactContext;
+    }
+
+    @Override
+    public String getName() {
+      return "SendIntentAndroid";
+    }
+
+    @Override
+    public Map<String, Object> getConstants() {
+      final Map<String, Object> constants = new HashMap<>();
+      constants.put("TEXT_PLAIN", TEXT_PLAIN);
+      constants.put("TEXT_HTML", TEXT_HTML);
+      return constants;
+    }
+
+    private Intent getSendIntent(String text, String type) {
+      Intent sendIntent = new Intent();
+      sendIntent.setAction(Intent.ACTION_SEND);
+      sendIntent.putExtra(Intent.EXTRA_TEXT, text);
+      sendIntent.setType(type);
+      sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+      return sendIntent;
+    }
+
+    @ReactMethod
+    public void sendText(String text, String type) {
+      Intent sendIntent = this.getSendIntent(text, type);
+
+      //Check that an app exists to receive the intent
+      if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+        this.reactContext.startActivity(sendIntent);
+      }
+    }
+
+    @ReactMethod
+    public void sendTextWithTitle(String title, String text, String type) {
+      Intent sendIntent = this.getSendIntent(text, type);
+
+      //Check that an app exists to receive the intent
+      if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+        Intent ni = Intent.createChooser(sendIntent, title);
+        ni.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        this.reactContext.startActivity(ni);
+      }
+    }
+
+}
