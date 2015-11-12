@@ -4,7 +4,7 @@
 
 'use strict';
 
-var RNSendIntentAndroid = require('NativeModules').SendIntentAndroid;
+var RNSendIntentAndroid = require('react-native').NativeModules.SendIntentAndroid;
 
 var SendIntentAndroid = {
     TEXT_PLAIN: RNSendIntentAndroid.TEXT_PLAIN,
