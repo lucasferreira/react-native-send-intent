@@ -1,6 +1,12 @@
 package com.burnweb.rnsendintent;
 
 import android.content.Intent;
+import android.util.Log;
+import android.net.Uri;
+
+import java.util.Map;
+import java.util.HashMap;
+import java.lang.SecurityException;
 
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.NativeModule;
@@ -8,9 +14,6 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-
-import java.util.Map;
-import java.util.HashMap;
 
 public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
@@ -47,6 +50,35 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
       sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
       return sendIntent;
+    }
+
+    @ReactMethod
+    public void sendPhoneCall(String phoneNumberString) {
+      //Needs permission "android.permission.CALL_PHONE"
+      Intent sendIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumberString.trim()));
+      sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+      //Check that an app exists to receive the intent
+      if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+        try {
+          this.reactContext.startActivity(sendIntent);
+        } catch(SecurityException ex) {
+          Log.d(TAG, ex.getMessage());
+
+          this.sendPhoneDial(phoneNumberString);
+        }
+      }
+    }
+
+    @ReactMethod
+    public void sendPhoneDial(String phoneNumberString) {
+      Intent sendIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumberString.trim()));
+      sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+      //Check that an app exists to receive the intent
+      if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+        this.reactContext.startActivity(sendIntent);
+      }
     }
 
     @ReactMethod

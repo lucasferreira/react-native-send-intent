@@ -18,6 +18,12 @@ var SendIntentAndroid = {
         {
             RNSendIntentAndroid.sendText(config.text, (config.type||"text/plain"));
         }
+    },
+    sendPhoneCall(phoneNumber) {
+        RNSendIntentAndroid.sendPhoneCall(phoneNumber);
+    },
+    sendPhoneDial(phoneNumber) {
+        RNSendIntentAndroid.sendPhoneDial(phoneNumber);
     }
 };
 

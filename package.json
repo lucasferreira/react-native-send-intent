@@ -1,7 +1,7 @@
 {
   "name": "react-native-send-intent",
-  "version": "1.0.1",
-  "description": "React Native Android module to use Android's Intent actions for send text to shareable apps",
+  "version": "1.0.2",
+  "description": "React Native Android module to use Android's Intent actions for send text to shareable apps and make phone calls",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,6 +15,11 @@
     "sent",
     "share",
     "text",
+    "phone",
+    "call",
+    "calls",
+    "dial",
+    "number",
     "android"
   ],
   "author": "Lucas Ferreira <contato@lucasferreira.com>",

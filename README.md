@@ -1,7 +1,7 @@
 # react-native-send-intent
-React Native Android module to use Android's Intent actions for send text to shareable apps.
+React Native Android module to use Android's Intent actions for send text to shareable apps or make phone calls.
 
-This module is useful when you need to share some text between apps in Android device.
+This module is useful when you need to share some text between apps in Android device and if you have a valid phone number make some call directly (if you ask for permission in AndroidManifest.xml).
 
 E.g.: You have and short text and want to share in a SMS or Whatsapp.
 
@@ -64,7 +64,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
 }
 ```
 
-## Example / Usage
+## Example / Usage of Text
 ```javascript
 var SendIntentAndroid = require('react-native-send-intent');
 
@@ -73,6 +73,32 @@ SendIntentAndroid.sendText({
   text: 'Lorem ipsum dolor sit amet, per error erant eu, antiopam intellegebat ne sed',
   type: SendIntentAndroid.TEXT_PLAIN
 });
+```
+
+## Example / Usage of Phone Calls
+It's very important ask for permission in your AndroidManifest.xml file if you need to use Phone Calls directly.
+
+Please add this line to your XML before using this example:
+
+```xml
+<uses-permission android:name="android.permission.CALL_PHONE" />
+```
+
+And them you can call in your JavaScript files:
+
+```javascript
+var SendIntentAndroid = require('react-native-send-intent');
+
+SendIntentAndroid.sendPhoneCall('+55 48 9999-9999');
+```
+
+## Example / Usage of Phone Dial Screen
+For this use you doesn't need to ask any permission.
+
+```javascript
+var SendIntentAndroid = require('react-native-send-intent');
+
+SendIntentAndroid.sendPhoneDial('+55 48 9999-9999');
 ```
 
 ## License
