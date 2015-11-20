@@ -22,11 +22,11 @@ var SendIntentAndroid = {
     sendPhoneCall(phoneNumber) {
         RNSendIntentAndroid.sendPhoneCall(phoneNumber);
     },
-    sendSms(phoneNumber, body) {
-        RNSendIntentAndroid.sendSms(phoneNumber, body);
-    },
     sendPhoneDial(phoneNumber) {
         RNSendIntentAndroid.sendPhoneDial(phoneNumber);
+    },
+    sendSms(phoneNumber, body) {
+        RNSendIntentAndroid.sendSms(phoneNumber, body);
     }
 };
 
