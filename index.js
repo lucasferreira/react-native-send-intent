@@ -24,6 +24,9 @@ var SendIntentAndroid = {
     },
     sendPhoneDial(phoneNumber) {
         RNSendIntentAndroid.sendPhoneDial(phoneNumber);
+    },
+    sendSms(phoneNumber, body) {
+        RNSendIntentAndroid.sendSms(phoneNumber, body);
     }
 };
 
