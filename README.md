@@ -75,6 +75,15 @@ SendIntentAndroid.sendText({
 });
 ```
 
+## Example / Usage of SMS
+Thanks to @pedro ;)
+
+```javascript
+var SendIntentAndroid = require('react-native-send-intent');
+
+SendIntentAndroid.sendSms('+55 48 9999-9999', 'SMS body text here');
+```
+
 ## Example / Usage of Phone Calls
 It's very important ask for permission in your AndroidManifest.xml file if you need to use Phone Calls directly.
 
