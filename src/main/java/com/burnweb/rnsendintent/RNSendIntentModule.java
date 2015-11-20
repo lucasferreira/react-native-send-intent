@@ -96,7 +96,6 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
       }
     }
 
-
     @ReactMethod
     public void sendText(String text, String type) {
       Intent sendIntent = this.getSendIntent(text, type);
