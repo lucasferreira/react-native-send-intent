@@ -98,24 +98,30 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void sendText(String text, String type) {
-      Intent sendIntent = this.getSendIntent(text, type);
-
+      final Intent sendIntent = this.getSendIntent(text, type);
       //Check that an app exists to receive the intent
       if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
-        this.reactContext.startActivity(sendIntent);
+        this.reactContext.runOnUiQueueThread(new Runnable(){
+            public void run(){
+                reactContext.startActivity(sendIntent);
+            }
+        });
       }
     }
 
     @ReactMethod
-    public void sendTextWithTitle(String title, String text, String type) {
-      Intent sendIntent = this.getSendIntent(text, type);
+    public void sendTextWithTitle(final String title, String text, String type) {
+      final Intent sendIntent = this.getSendIntent(text, type);
 
       //Check that an app exists to receive the intent
       if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
-        Intent ni = Intent.createChooser(sendIntent, title);
-        ni.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        this.reactContext.startActivity(ni);
+        this.reactContext.runOnUiQueueThread(new Runnable(){
+            public void run(){
+                Intent ni = Intent.createChooser(sendIntent, title);
+                ni.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                reactContext.startActivity(ni);
+            }
+        });
       }
     }
 
