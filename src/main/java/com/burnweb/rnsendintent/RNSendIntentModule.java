@@ -176,7 +176,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
       Intent sendIntent = new Intent()
           .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-          .setComponent(cn);
+          .setType("vnd.android.cursor.item/event");
 
       if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
           this.reactContext.startActivity(sendIntent);
