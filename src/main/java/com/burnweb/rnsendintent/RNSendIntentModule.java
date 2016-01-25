@@ -1,12 +1,20 @@
 package com.burnweb.rnsendintent;
 
 import android.content.Intent;
+import android.content.ComponentName;
+import android.provider.CalendarContract;
+import android.provider.CalendarContract.Calendars;
+import android.provider.CalendarContract.Events;
 import android.util.Log;
 import android.net.Uri;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Calendar;
+import java.util.Arrays;
 import java.lang.SecurityException;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.NativeModule;
@@ -21,6 +29,8 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
     private static final String TEXT_PLAIN = "text/plain";
     private static final String TEXT_HTML = "text/html";
+    private static final String[] VALID_RECURRENCE = { "DAILY", "WEEKLY", "MONTHLY", "YEARLY"};
+
 
     private ReactApplicationContext reactContext;
 
@@ -125,4 +135,51 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
       }
     }
 
+    @ReactMethod
+    public void sendAddCalendarEvent(String title, String description, String startDate, String endDate, String recurrence) {
+
+      Calendar startCal = Calendar.getInstance();
+      SimpleDateFormat sdf = new SimpleDateFormat("y-MMMM-d H:m");
+      try {
+          startCal.setTime(sdf.parse(startDate));
+      } catch (ParseException e) {
+          e.printStackTrace();
+      }
+
+      Calendar endCal = Calendar.getInstance();
+      try {
+          endCal.setTime(sdf.parse(endDate));
+      } catch (ParseException e) {
+          e.printStackTrace();
+      }
+
+      Intent sendIntent = new Intent(Intent.ACTION_INSERT)
+          .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+          .setData(Events.CONTENT_URI)
+          .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startCal.getTimeInMillis())
+          .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endCal.getTimeInMillis())
+          .putExtra(Events.TITLE, title)
+          .putExtra(Events.DESCRIPTION, description);
+
+      if (Arrays.asList(VALID_RECURRENCE).contains(recurrence.toUpperCase())) {
+          sendIntent.putExtra(Events.RRULE, "FREQ=" + recurrence.toUpperCase());
+      }
+
+      if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+          this.reactContext.startActivity(sendIntent);
+      }
+    }
+
+    @ReactMethod
+    public void sendOpenCalendar() {
+      ComponentName cn = new ComponentName("com.android.calendar", "com.android.calendar.LaunchActivity");
+
+      Intent sendIntent = new Intent()
+          .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+          .setComponent(cn);
+
+      if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+          this.reactContext.startActivity(sendIntent);
+      }
+    }
 }
