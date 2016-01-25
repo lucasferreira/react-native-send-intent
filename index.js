@@ -27,6 +27,12 @@ var SendIntentAndroid = {
     },
     sendSms(phoneNumber, body) {
         RNSendIntentAndroid.sendSms(phoneNumber, (body||null));
+    },
+    sendAddCalendarEvent(config) {
+        RNSendIntentAndroid.sendAddCalendarEvent(config.title, config.description, config.startDate, config.endDate, config.recurrence);
+    },
+    sendOpenCalendar() {
+        RNSendIntentAndroid.sendOpenCalendar();
     }
 };
 
