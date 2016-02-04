@@ -28,10 +28,10 @@ var SendIntentAndroid = {
     sendSms(phoneNumber, body) {
         RNSendIntentAndroid.sendSms(phoneNumber, (body||null));
     },
-    sendAddCalendarEvent(config) {
+    addCalendarEvent(config) {
         RNSendIntentAndroid.sendAddCalendarEvent(config.title, config.description, config.startDate, config.endDate, config.recurrence);
     },
-    sendOpenCalendar() {
+    openCalendar() {
         RNSendIntentAndroid.sendOpenCalendar();
     }
 };

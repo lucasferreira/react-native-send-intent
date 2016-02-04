@@ -136,7 +136,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void sendAddCalendarEvent(String title, String description, String startDate, String endDate, String recurrence) {
+    public void addCalendarEvent(String title, String description, String startDate, String endDate, String recurrence) {
 
       Calendar startCal = Calendar.getInstance();
       SimpleDateFormat sdf = new SimpleDateFormat("y-MMMM-d H:m");
@@ -171,7 +171,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void sendOpenCalendar() {
+    public void openCalendar() {
       ComponentName cn = new ComponentName("com.android.calendar", "com.android.calendar.LaunchActivity");
 
       Intent sendIntent = new Intent()
