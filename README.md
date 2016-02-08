@@ -115,5 +115,30 @@ var SendIntentAndroid = require('react-native-send-intent');
 SendIntentAndroid.sendPhoneDial('+55 48 9999-9999');
 ```
 
+## Example / Create Calendar Event
+
+According to [Google](http://developer.android.com/guide/topics/providers/calendar-provider.html#intents) using Intents for
+ inserting, updating, and viewing calendar events is the preferred method.  At this time only simple **recurrence** is
+ supported ['daily'|'weekly'|'monthly'|'yearly'].
+
+Create a Calendar Event:
+
+```javascript
+// Create the Calendar Intent.
+SendIntentAndroid.sendAddCalendarEvent({
+  title: 'Go To The Park',
+  description: "It's fun to play at the park.",
+  startDate: '2016-01-25 10:00',
+  endDate: '2016-01-25 11:00',
+  recurrence: 'weekly'
+});
+```
+
+## Example / Open Calendar
+
+```javascript
+SendIntentAndroid.sendOpenCalendar();
+```
+
 ## License
 MIT
