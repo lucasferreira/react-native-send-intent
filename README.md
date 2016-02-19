@@ -36,7 +36,27 @@ dependencies {
 }
 ```
 
-* Register Module (in MainActivity.java)
+* Register Module >= 0.18 (in MainActivity.java)
+
+```java
+import com.burnweb.rnsendintent.RNSendIntentPackage;  // <--- import
+
+public class MainActivity extends ReactActivity {
+  ......
+
+  @Override
+  protected List<ReactPackage> getPackages() {
+    return Arrays.<ReactPackage>asList(
+            new MainReactPackage(),
+            new RNSendIntentPackage()); // <------ add this line to your MainActivity class
+  }
+
+  ......
+
+}
+```
+
+* Register Module <= 0.17 (in MainActivity.java)
 
 ```java
 import com.burnweb.rnsendintent.RNSendIntentPackage;  // <--- import
@@ -54,7 +74,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
       .setBundleAssetName("index.android.bundle")
       .setJSMainModuleName("index.android")
       .addPackage(new MainReactPackage())
-      .addPackage(new RNSendIntentPackage()) // <------ add this line to yout MainActivity class
+      .addPackage(new RNSendIntentPackage()) // <------ add this line to your MainActivity class
       .setUseDeveloperSupport(BuildConfig.DEBUG)
       .setInitialLifecycleState(LifecycleState.RESUMED)
       .build();
