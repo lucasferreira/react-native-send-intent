@@ -32,7 +32,7 @@ var SendIntentAndroid = {
         RNSendIntentAndroid.sendAddCalendarEvent(config.title, config.description, config.startDate, config.endDate, config.recurrence);
     },
     openCalendar() {
-        RNSendIntentAndroid.sendOpenCalendar();
+        RNSendIntentAndroid.openCalendar();
     }
 };
 
