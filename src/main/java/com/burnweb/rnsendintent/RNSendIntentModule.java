@@ -139,7 +139,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     public void addCalendarEvent(String title, String description, String startDate, String endDate, String recurrence) {
 
       Calendar startCal = Calendar.getInstance();
-      SimpleDateFormat sdf = new SimpleDateFormat("y-MMMM-d H:m");
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
       try {
           startCal.setTime(sdf.parse(startDate));
       } catch (ParseException e) {
