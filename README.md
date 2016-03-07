@@ -145,7 +145,7 @@ Create a Calendar Event:
 
 ```javascript
 // Create the Calendar Intent.
-SendIntentAndroid.sendAddCalendarEvent({
+SendIntentAndroid.addCalendarEvent({
   title: 'Go To The Park',
   description: "It's fun to play at the park.",
   startDate: '2016-01-25 10:00',
