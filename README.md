@@ -157,7 +157,7 @@ SendIntentAndroid.addCalendarEvent({
 ## Example / Open Calendar
 
 ```javascript
-SendIntentAndroid.sendOpenCalendar();
+SendIntentAndroid.openCalendar();
 ```
 
 ## License
