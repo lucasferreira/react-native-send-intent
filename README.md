@@ -107,6 +107,18 @@ Thanks to @pedro ;)
 var SendIntentAndroid = require('react-native-send-intent');
 
 SendIntentAndroid.sendSms('+55 48 9999-9999', 'SMS body text here');
+
+```
+
+You can now also send an array of numbers to send a sms to multiple recipients:
+
+```javascript
+
+//Or pass sendSms and array of numbers/recipients and don´t forget the join(',')
+const recipients = ['+55 48 9999-9999','+55 48 8888-8888'];
+
+SendIntentAndroid.sendSms(recipients.join(','), 'SMS body text here');
+
 ```
 
 ## Example / Usage of Phone Calls
