@@ -150,7 +150,8 @@ SendIntentAndroid.addCalendarEvent({
   description: "It's fun to play at the park.",
   startDate: '2016-01-25 10:00',
   endDate: '2016-01-25 11:00',
-  recurrence: 'weekly'
+  recurrence: 'weekly',
+  location: 'The Park'
 });
 ```
 
