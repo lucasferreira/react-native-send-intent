@@ -4,11 +4,13 @@
 
 'use strict';
 
-var RNSendIntentAndroid = require('react-native').NativeModules.SendIntentAndroid;
+var React = require('react-native');
+var {Platform, NativeModules} = React;
+var RNSendIntentAndroid = NativeModules.SendIntentAndroid;
 
 var SendIntentAndroid = {
-    TEXT_PLAIN: RNSendIntentAndroid.TEXT_PLAIN,
-    TEXT_HTML: RNSendIntentAndroid.TEXT_HTML,
+    TEXT_PLAIN: (Platform.OS === 'android') ? RNSendIntentAndroid.TEXT_PLAIN : 'text/plain',
+    TEXT_HTML: (Platform.OS === 'android') ? RNSendIntentAndroid.TEXT_HTML : 'text/html',
     sendText(config) {
         if("title" in config && config.title != null && config.title.length > 0)
         {
