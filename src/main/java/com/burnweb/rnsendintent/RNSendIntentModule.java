@@ -92,13 +92,19 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void sendSms(String phoneNumberString, String body) {
-      Intent sendIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + phoneNumberString.trim()));
-      sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    public void sendSms(String phoneNumbers, String body) {
 
-      if (body != null) {
-        sendIntent.putExtra("sms_body", body);
-      }
+         StringBuilder uri = new StringBuilder("sms:");
+         uri.append(phoneNumbers);
+
+         Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+         //sendIntent.setType("vnd.android-dir/mms-sms");
+         sendIntent = sendIntent.setData(Uri.parse(uri.toString()));
+         sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+         if (body != null) {
+             sendIntent.putExtra("sms_body", body);
+         }
 
       //Check that an app exists to receive the intent
       if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
