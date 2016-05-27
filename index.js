@@ -4,8 +4,10 @@
 
 'use strict';
 
-var React = require('react-native');
-var {Platform, NativeModules} = React;
+var React = require('react');
+var ReactNative = require('react-native');
+
+var { Platform, NativeModules } = ReactNative;
 var RNSendIntentAndroid = NativeModules.SendIntentAndroid;
 
 var SendIntentAndroid = {
