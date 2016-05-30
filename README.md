@@ -23,7 +23,7 @@ npm install react-native-send-intent --save
 ```gradle
 ...
 include ':RNSendIntentModule', ':app'
-project(':RNSendIntentModule').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-send-intent')
+project(':RNSendIntentModule').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-send-intent/android')
 ```
 
 * In `android/app/build.gradle`
