@@ -1,6 +1,6 @@
 {
   "name": "react-native-send-intent",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "React Native Android module to use Android's Intent actions for send sms, text to shareable apps or make phone calls",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,6 @@
   "repository": "https://github.com/lucasferreira/react-native-send-intent",
   "bugs": "https://github.com/lucasferreira/react-native-send-intent/issues",
   "peerDependencies": {
-    "react-native": ">=0.13"
+    "react-native": ">=0.19"
   }
 }
