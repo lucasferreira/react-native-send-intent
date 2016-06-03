@@ -107,9 +107,10 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void sendMail(String recepientString, String body) {
+    public void sendMail(String recepientString, String subject, String body) {
       String uriText = "mailto:" + Uri.encode(recepientString) +
-            "?body=" + Uri.encode(body);
+            "?body=" + Uri.encode(body) +
+            "&subject=" + Uri.encode(subject);
 
       Intent sendIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse(uriText));
       sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

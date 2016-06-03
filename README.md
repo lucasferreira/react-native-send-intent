@@ -89,7 +89,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
 }
 ```
 
-## Example / Usage of Text
+## Example / Usage of Text (Share)
 ```javascript
 var SendIntentAndroid = require('react-native-send-intent');
 
@@ -99,6 +99,12 @@ SendIntentAndroid.sendText({
   type: SendIntentAndroid.TEXT_PLAIN
 });
 ```
+
+## Example / Usage of Send Mail (text/plain only)
+```javascript
+var SendIntentAndroid = require('react-native-send-intent');
+
+SendIntentAndroid.sendMail("your@address.com", "Subject test", "Test body");
 
 ## Example / Usage of SMS
 Thanks to @pedro ;)
