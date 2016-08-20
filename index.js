@@ -30,7 +30,7 @@ var SendIntentAndroid = {
         RNSendIntentAndroid.sendSms(phoneNumber, (body||null));
     },
     addCalendarEvent(config) {
-        RNSendIntentAndroid.addCalendarEvent(config.title, config.description, config.startDate, config.endDate, config.recurrence, config.location);
+        RNSendIntentAndroid.addCalendarEvent(config.title, config.description, config.startDate, config.endDate, config.recurrence, config.location, config.isAllDay);
     },
     openCalendar() {
         RNSendIntentAndroid.openCalendar();
