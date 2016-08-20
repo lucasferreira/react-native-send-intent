@@ -167,5 +167,14 @@ SendIntentAndroid.addCalendarEvent({
 SendIntentAndroid.openCalendar();
 ```
 
+## Example / Open Share With dialog
+```javascript
+  // Create Share With dialog.
+  SendIntentAndroid.openChooserWithOptions({
+    subject: 'Story Title',
+    text: 'Message Body'
+  }, 'Share Story');
+```
+
 ## License
 MIT
