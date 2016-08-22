@@ -168,6 +168,8 @@ SendIntentAndroid.openCalendar();
 ```
 
 ## Example / Open Share With dialog
+
+Opens Androids default share tray
 ```javascript
   // Create Share With dialog.
   SendIntentAndroid.openChooserWithOptions({
