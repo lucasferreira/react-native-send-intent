@@ -36,19 +36,19 @@ dependencies {
 }
 ```
 
-* Register Module >= 0.18 (in MainActivity.java)
+* Register Module >= 0.29 (in MainApplication.java)
 
 ```java
 import com.burnweb.rnsendintent.RNSendIntentPackage;  // <--- import
 
-public class MainActivity extends ReactActivity {
+public class MainApplication extends Application implements ReactApplication {
   ......
 
   @Override
   protected List<ReactPackage> getPackages() {
     return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
-            new RNSendIntentPackage()); // <------ add this line to your MainActivity class
+            new RNSendIntentPackage()); // <------ add this line to your MainApplication class
   }
 
   ......
@@ -56,38 +56,8 @@ public class MainActivity extends ReactActivity {
 }
 ```
 
-* Register Module <= 0.17 (in MainActivity.java)
+If you need to see the install instructions for older React Native versions [look here](https://github.com/lucasferreira/react-native-send-intent/blob/react-native-older/README.md).
 
-```java
-import com.burnweb.rnsendintent.RNSendIntentPackage;  // <--- import
-
-public class MainActivity extends Activity implements DefaultHardwareBackBtnHandler {
-  ......
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    mReactRootView = new ReactRootView(this);
-
-    mReactInstanceManager = ReactInstanceManager.builder()
-      .setApplication(getApplication())
-      .setBundleAssetName("index.android.bundle")
-      .setJSMainModuleName("index.android")
-      .addPackage(new MainReactPackage())
-      .addPackage(new RNSendIntentPackage()) // <------ add this line to your MainActivity class
-      .setUseDeveloperSupport(BuildConfig.DEBUG)
-      .setInitialLifecycleState(LifecycleState.RESUMED)
-      .build();
-
-    mReactRootView.startReactApplication(mReactInstanceManager, "AndroidRNSample", null);
-
-    setContentView(mReactRootView);
-  }
-
-  ......
-
-}
-```
 
 ## Example / Usage of Text (Share)
 ```javascript
