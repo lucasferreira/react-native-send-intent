@@ -38,6 +38,9 @@ var SendIntentAndroid = {
     sendMail(mail, subject, body) {
         RNSendIntentAndroid.sendMail(mail, (subject || ''), (body || ''));
     },
+    openChooserWithOptions(options: Object, title: string) {
+      RNSendIntentAndroid.openChooserWithOptions(options, title);
+    },
 };
 
 module.exports = SendIntentAndroid;
