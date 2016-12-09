@@ -230,4 +230,22 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
             currentActivity.startActivity(Intent.createChooser(intent, title));
         }
     }
+
+    @ReactMethod
+    public void openMaps(String query) {
+      Uri gmmIntentUri = Uri.parse("geo:0,0?q="+query);
+      Intent sendIntent = new Intent(android.content.Intent.ACTION_VIEW, gmmIntentUri);
+      sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+      //Check that an app exists to receive the intent
+      if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+        this.reactContext.startActivity(sendIntent);
+      } else {
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+          this.reactContext.startActivity(mapIntent);
+        }
+      }
+    }
 }

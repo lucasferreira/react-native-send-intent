@@ -41,6 +41,9 @@ var SendIntentAndroid = {
     openChooserWithOptions(options: Object, title: string) {
       RNSendIntentAndroid.openChooserWithOptions(options, title);
     },
+    openMaps(query) {
+        RNSendIntentAndroid.openMaps(query);
+    }
 };
 
 module.exports = SendIntentAndroid;
