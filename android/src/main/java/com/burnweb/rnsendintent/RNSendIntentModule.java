@@ -240,12 +240,6 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
       //Check that an app exists to receive the intent
       if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
         this.reactContext.startActivity(sendIntent);
-      } else {
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-        if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
-          this.reactContext.startActivity(mapIntent);
-        }
       }
     }
 }
