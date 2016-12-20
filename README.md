@@ -139,13 +139,23 @@ SendIntentAndroid.openCalendar();
 
 ## Example / Open Share With dialog
 
-Opens Androids default share tray
+Opens Androids default share tray:
+
 ```javascript
   // Create Share With dialog.
   SendIntentAndroid.openChooserWithOptions({
     subject: 'Story Title',
     text: 'Message Body'
   }, 'Share Story');
+```
+
+## Example / Open Maps
+
+Opens Androids default maps app with location:
+
+```javascript
+  // Open Maps App
+  SendIntentAndroid.openMaps('Piccadilly Circus Station, London, United Kingdom');
 ```
 
 ## License
