@@ -1,5 +1,5 @@
 # react-native-send-intent
-React Native Android module to use Android's Intent actions for send text to shareable apps or make phone calls.
+React Native Android module to use Android's Intent actions for send text to shareable apps or make phone calls or opening third party apps.
 
 [![npm version](http://img.shields.io/npm/v/react-native-send-intent.svg?style=flat-square)](https://npmjs.org/package/react-native-send-intent "View this project on npm")
 [![npm downloads](http://img.shields.io/npm/dm/react-native-send-intent.svg?style=flat-square)](https://npmjs.org/package/react-native-send-intent "View this project on npm")
@@ -17,6 +17,14 @@ npm install react-native-send-intent --save
 ```
 
 ### Add it to your android project
+
+* Automatically with:
+
+```bash
+react-native link react-native-send-intent
+```
+
+#### Manually
 
 * In `android/setting.gradle`
 
@@ -129,6 +137,24 @@ SendIntentAndroid.addCalendarEvent({
   recurrence: 'weekly',
   location: 'The Park'
 });
+```
+
+## Example / Check if an application is installed
+
+Check if Gmail app is intalled. Returns a promise with a boolean telling if the app is installed or not
+
+```javascript
+SendIntentAndroid.isAppInstallaed('com.google.android.gm');
+  .then((isInstalled) => {})
+```
+
+## Example / Open App
+
+Open Gmail app. Returns a promise with a boolean telling if the app was opened or not:
+
+```javascript
+SendIntentAndroid.openApp('com.google.android.gm');
+  .then((wasOpened) => {})
 ```
 
 ## Example / Open Calendar
