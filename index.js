@@ -32,6 +32,12 @@ var SendIntentAndroid = {
     addCalendarEvent(config) {
         RNSendIntentAndroid.addCalendarEvent(config.title, config.description, config.startDate, config.endDate, config.recurrence, config.location, config.isAllDay||false);
     },
+    isAppInstalled(packageName) {
+        return RNSendIntentAndroid.isAppInstalled(packageName);
+    },
+    openApp(packageName) {
+        return RNSendIntentAndroid.openApp(packageName);
+    },
     openCalendar() {
         RNSendIntentAndroid.openCalendar();
     },

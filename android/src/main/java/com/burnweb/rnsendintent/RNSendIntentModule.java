@@ -19,6 +19,7 @@ import java.text.ParseException;
 
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.NativeModule;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -187,6 +188,30 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
       if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
           this.reactContext.startActivity(sendIntent);
       }
+    }
+
+    @ReactMethod
+    public void isAppInstalled(String packageName, final Promise promise) {
+        Intent sendIntent = this.reactContext.getPackageManager().getLaunchIntentForPackage(packageName);
+        if (sendIntent == null) {
+            promise.resolve(false);
+            return;
+        }
+
+        promise.resolve(true);
+    }
+
+    @ReactMethod
+    public void openApp(String packageName, final Promise promise) {
+        Intent sendIntent = this.reactContext.getPackageManager().getLaunchIntentForPackage(packageName);
+        if (sendIntent == null) {
+            promise.resolve(false);
+            return;
+        }
+
+        sendIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        this.reactContext.startActivity(sendIntent);
+        promise.resolve(true);
     }
 
     @ReactMethod
