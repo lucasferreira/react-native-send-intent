@@ -49,7 +49,10 @@ var SendIntentAndroid = {
     },
     openMaps(query) {
         RNSendIntentAndroid.openMaps(query);
-    }
+    },
+    shareTextToLine(options: Object) {
+        RNSendIntentAndroid.shareTextToLine(options);
+    },
 };
 
 module.exports = SendIntentAndroid;
