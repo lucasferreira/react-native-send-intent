@@ -267,4 +267,25 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         this.reactContext.startActivity(sendIntent);
       }
     }
+    
+    
+    @ReactMethod
+    public void shareTextToLine(ReadableMap options) {
+
+        ComponentName cn = new ComponentName("jp.naver.line.android"
+                , "jp.naver.line.android.activity.selectchat.SelectChatActivity");
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        shareIntent.setType("text/plain");
+
+        if (options.hasKey("text")) {
+            shareIntent.putExtra(Intent.EXTRA_TEXT, options.getString("text"));
+        }
+
+        shareIntent.setComponent(cn);
+        this.reactContext.startActivity(shareIntent);
+
+    }
+    
 }
