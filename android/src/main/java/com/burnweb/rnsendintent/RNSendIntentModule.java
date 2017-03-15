@@ -268,6 +268,19 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
       }
     }
     
+    @ReactMethod
+    public void openMapsWithRoute(String query, String mode) {
+        Uri gmmIntentUri = Uri.parse("google.navigation:q="+query+"&mode="+mode);
+
+        Intent sendIntent = new Intent(android.content.Intent.ACTION_VIEW, gmmIntentUri);
+        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        //Check that an app exists to receive the intent
+        if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+            this.reactContext.startActivity(sendIntent);
+        }
+    }
+    
     
     @ReactMethod
     public void shareTextToLine(ReadableMap options) {
