@@ -184,5 +184,16 @@ Opens Androids default maps app with location:
   SendIntentAndroid.openMaps('Piccadilly Circus Station, London, United Kingdom');
 ```
 
+## Example / Play Youtube video
+
+Opens Android Youtube app (or browser if not installed) and play the vídeo:
+
+`playYoutubeVideo(videoId: string, fullScreen: boolean): void`
+
+```javascript
+  // Play Youtube video
+  SendIntentAndroid.playYoutubeVideo('NxwYwqxG3lc', true);
+```
+
 ## License
 MIT

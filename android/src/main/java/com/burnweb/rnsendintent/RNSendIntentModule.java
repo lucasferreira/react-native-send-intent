@@ -267,4 +267,19 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         this.reactContext.startActivity(sendIntent);
       }
     }
+
+    @ReactMethod
+    public void playYoutubeVideo(String videoId, boolean fullScreen) {
+      Uri videoIntentUri = Uri.parse("vnd.youtube:" + videoId);
+      Intent intent = new Intent(android.content.Intent.ACTION_VIEW, videoIntentUri);
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      intent.putExtra("VIDEO_ID", videoId);
+      intent.putExtra("force_fullscreen", fullScreen);
+
+      //Check that an app exists to receive the intent
+      if (intent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+        this.reactContext.startActivity(intent);
+      }
+    }
+
 }
