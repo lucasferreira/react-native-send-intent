@@ -35,8 +35,8 @@ var SendIntentAndroid = {
     isAppInstalled(packageName) {
         return RNSendIntentAndroid.isAppInstalled(packageName);
     },
-    openApp(packageName) {
-        return RNSendIntentAndroid.openApp(packageName);
+    openApp(packageName, extras) {
+        return RNSendIntentAndroid.openApp(packageName, (extras || {}));
     },
     openCalendar() {
         RNSendIntentAndroid.openCalendar();
