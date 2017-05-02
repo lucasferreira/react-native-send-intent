@@ -214,7 +214,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         while(it.hasNextKey()) {
           final String key = it.nextKey();
           final String value = extras.getString(key);
-          sentIntent.putExtra(key, value);
+          sendIntent.putExtra(key, value);
         }
 
         sendIntent.addCategory(Intent.CATEGORY_LAUNCHER);
