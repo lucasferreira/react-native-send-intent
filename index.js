@@ -49,6 +49,9 @@ var SendIntentAndroid = {
     },
     openMaps(query) {
         RNSendIntentAndroid.openMaps(query);
+    },
+    playYoutubeVideo(videoId: string, fullScreen: boolean) {
+        RNSendIntentAndroid.playYoutubeVideo(videoId, fullScreen);
     }
 };
 
