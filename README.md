@@ -155,6 +155,11 @@ Open Gmail app. Returns a promise with a boolean telling if the app was opened o
 ```javascript
 SendIntentAndroid.openApp('com.google.android.gm');
   .then((wasOpened) => {})
+
+// You can also specify arbitrary intent extras to be passed to the app
+SendIntentAndroid.openApp('com.mycorp.myapp', {"com.mycorp.myapp.reason": "just because"
+                                               "com.mycorp.myapp.data": "must be a string"});
+  .then((wasOpened) => {})
 ```
 
 ## Example / Open Calendar

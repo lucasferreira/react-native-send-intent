@@ -25,6 +25,7 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableMapKeySetIterator;
 
 public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
@@ -202,11 +203,18 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void openApp(String packageName, final Promise promise) {
+    public void openApp(String packageName, ReadableMap extras, final Promise promise) {
         Intent sendIntent = this.reactContext.getPackageManager().getLaunchIntentForPackage(packageName);
         if (sendIntent == null) {
             promise.resolve(false);
             return;
+        }
+
+        final ReadableMapKeySetIterator it = extras.keySetIterator();
+        while(it.hasNextKey()) {
+          final String key = it.nextKey();
+          final String value = extras.getString(key);
+          sendIntent.putExtra(key, value);
         }
 
         sendIntent.addCategory(Intent.CATEGORY_LAUNCHER);
