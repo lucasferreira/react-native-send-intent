@@ -67,6 +67,16 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void openCamera() {
+      //Needs permission "android.permission.CALL_PHONE"
+      Intent sendIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+      sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+          this.reactContext.startActivity(sendIntent);
+      }
+    }
+
+    @ReactMethod
     public void sendPhoneCall(String phoneNumberString) {
       //Needs permission "android.permission.CALL_PHONE"
       Intent sendIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumberString.trim()));
