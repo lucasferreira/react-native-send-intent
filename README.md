@@ -174,6 +174,12 @@ Opens Androids default share tray:
     subject: 'Story Title',
     text: 'Message Body'
   }, 'Share Story');
+
+  SendIntentAndroid.openChooserWithOptions({
+    subject: 'Video Title',
+    videoUrl: '/path_or_url/to/video.mp4'
+  }, 'Share video to');
+
 ```
 
 ## Example / Open Maps

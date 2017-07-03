@@ -252,6 +252,14 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
             Uri uri = Uri.parse(options.getString("imageUrl"));
             intent.putExtra(Intent.EXTRA_STREAM, uri);
             intent.setType("image/*");
+        } else if (options.hasKey("videoUrl")) {
+            File media = new File(options.getString("videoUrl"));
+            Uri uri = Uri.fromFile(media);
+            if(!options.hasKey("subject")) {
+              intent.putExtra(Intent.EXTRA_SUBJECT,"Untitled_Video");
+            }
+            intent.putExtra(Intent.EXTRA_STREAM, uri);
+            intent.setType("video/*");
         } else {
             intent.setType("text/plain");
         }
