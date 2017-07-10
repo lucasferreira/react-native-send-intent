@@ -69,7 +69,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void sendPhoneCall(String phoneNumberString) {
       //Needs permission "android.permission.CALL_PHONE"
-      Intent sendIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumberString.trim()));
+      Intent sendIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumberString.replaceAll("#", "%23").trim()));
       sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
       //Check that an app exists to receive the intent
