@@ -49,7 +49,16 @@ var SendIntentAndroid = {
     },
     openMaps(query) {
         RNSendIntentAndroid.openMaps(query);
-    }
+    },
+    openMapsWithRoute(query, mode) {
+        RNSendIntentAndroid.openMapsWithRoute(query, mode);
+    },
+    shareTextToLine(options: Object) {
+        RNSendIntentAndroid.shareTextToLine(options);
+    },
+    shareImageToInstagram(type, mediaPath) {
+        RNSendIntentAndroid.shareImageToInstagram(type, mediaPath);
+    },
 };
 
 module.exports = SendIntentAndroid;

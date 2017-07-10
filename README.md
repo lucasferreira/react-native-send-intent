@@ -185,5 +185,72 @@ Opens Androids default maps app with location:
   SendIntentAndroid.openMaps('Piccadilly Circus Station, London, United Kingdom');
 ```
 
+
+## Example / Open Maps With Route
+
+Opens Androids default maps app, and route path between your location and **address**:
+
+mode: d,w,b
+
+- d: drive car
+- w: walking
+- b: bicycle
+
+```javascript  
+  SendIntentAndroid.openMapsWithRoute('Piccadilly Circus Station, London, United Kingdom', "w");
+```
+
+
+## Example / Share text to line
+```javascript  
+  SendIntentAndroid.isAppInstalled('jp.naver.line.android')
+    .then(function(isInstalled){
+
+      if(!isInstalled){
+        //LINE has not install, you need to install it!
+        return;
+      }
+
+      SendIntentAndroid.shareTextToLine({text: "txt message that you want to share"});
+
+    });
+```
+
+when you call SendIntentAndroid.shareTextToLine this method, app will bring txt message to LINE, and you can select one or multiple friends to share.
+
+
+## Example / Share Image to Instagram
+```javascript  
+  import { CameraRoll } from 'react-native';
+
+  //get frist image from CameraRoll
+  CameraRoll.getPhotos({first: 1}).then(
+    function(data){
+
+      const assets = data.edges
+
+      SendIntentAndroid.isAppInstalled('com.instagram.android')
+      .then(function(isInstalled){
+
+        if(!isInstalled){
+          //Instagram has not install
+          return;
+        }
+
+        SendIntentAndroid.shareImageToInstagram("image/*", encodeURI(assets[0].node.image.uri));
+
+      });
+
+
+    },
+    function(err){
+      console.error('An error occurred', err)
+    }
+  );
+```
+
+Share your first image from CameraRoll to Instagram.
+
+
 ## License
 MIT
