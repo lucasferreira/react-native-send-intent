@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.lang.SecurityException;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
+import java.io.File;
 
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.NativeModule;
