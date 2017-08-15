@@ -164,6 +164,12 @@ SendIntentAndroid.openApp('com.mycorp.myapp', {"com.mycorp.myapp.reason": "just 
 SendIntentAndroid.openCalendar();
 ```
 
+## Example / Open Camera Intent
+
+```javascript
+SendIntentAndroid.openCamera();
+```
+
 ## Example / Open Share With dialog
 
 Opens Androids default share tray:
@@ -202,13 +208,13 @@ mode: d,w,b
 - w: walking
 - b: bicycle
 
-```javascript  
+```javascript
   SendIntentAndroid.openMapsWithRoute('Piccadilly Circus Station, London, United Kingdom', "w");
 ```
 
 
 ## Example / Share text to line
-```javascript  
+```javascript
   SendIntentAndroid.isAppInstalled('jp.naver.line.android')
     .then(function(isInstalled){
 
@@ -226,7 +232,7 @@ when you call SendIntentAndroid.shareTextToLine this method, app will bring txt 
 
 
 ## Example / Share Image to Instagram
-```javascript  
+```javascript
   import { CameraRoll } from 'react-native';
 
   //get frist image from CameraRoll

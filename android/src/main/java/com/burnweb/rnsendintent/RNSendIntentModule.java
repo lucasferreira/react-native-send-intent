@@ -69,7 +69,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void openCamera() {
-      //Needs permission "android.permission.CALL_PHONE"
+      //Needs permission "android.permission.CAMERA"
       Intent sendIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
       sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
@@ -294,7 +294,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         this.reactContext.startActivity(sendIntent);
       }
     }
-    
+
     @ReactMethod
     public void openMapsWithRoute(String query, String mode) {
         Uri gmmIntentUri = Uri.parse("google.navigation:q="+query+"&mode="+mode);
@@ -307,8 +307,8 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
             this.reactContext.startActivity(sendIntent);
         }
     }
-    
-    
+
+
     @ReactMethod
     public void shareTextToLine(ReadableMap options) {
 
@@ -327,8 +327,8 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         this.reactContext.startActivity(shareIntent);
 
     }
-    
-    
+
+
     @ReactMethod
     public void shareImageToInstagram(String mineType, String mediaPath) {
 
@@ -344,5 +344,5 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         this.reactContext.startActivity(sendIntent);
 
     }
-    
+
 }
