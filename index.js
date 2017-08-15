@@ -50,6 +50,9 @@ var SendIntentAndroid = {
     openMaps(query) {
         RNSendIntentAndroid.openMaps(query);
     },
+    openCamera() {
+        RNSendIntentAndroid.openCamera();
+    },
     openMapsWithRoute(query, mode) {
         RNSendIntentAndroid.openMapsWithRoute(query, mode);
     },
