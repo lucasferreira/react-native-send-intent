@@ -49,7 +49,10 @@ var SendIntentAndroid = {
     },
     openMaps(query) {
         RNSendIntentAndroid.openMaps(query);
-    }
+    },
+    openCamera() {
+        RNSendIntentAndroid.openCamera();
+    },
 };
 
 module.exports = SendIntentAndroid;
