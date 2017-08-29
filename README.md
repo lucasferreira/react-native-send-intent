@@ -264,5 +264,14 @@ when you call SendIntentAndroid.shareTextToLine this method, app will bring txt 
 Share your first image from CameraRoll to Instagram.
 
 
+## Example / Open Settings
+
+Opens a specified settings screen when passed one of the constant values available in `android.provider.settings` (use the constant value found [here](https://developer.android.com/reference/android/provider/Settings.html#ACTION_SECURITY_SETTINGS) to open the Security Settings screen).
+
+```javascript
+  SendIntentAndroid.openSettings('android.settings.SECURITY_SETTINGS');
+```
+
+
 ## License
 MIT
