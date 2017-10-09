@@ -345,4 +345,14 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
     }
 
+    @ReactMethod
+    public void openSettings(String screenName) {
+        Intent settingsIntent = new Intent(screenName);
+        settingsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        if (settingsIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+            this.reactContext.startActivity(settingsIntent);
+        }
+    }
+
 }
