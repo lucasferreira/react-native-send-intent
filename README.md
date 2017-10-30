@@ -144,7 +144,16 @@ SendIntentAndroid.addCalendarEvent({
 Check if Gmail app is intalled. Returns a promise with a boolean telling if the app is installed or not
 
 ```javascript
-SendIntentAndroid.isAppInstallaed('com.google.android.gm').then((isInstalled) => {});
+SendIntentAndroid.isAppInstalled('com.google.android.gm').then((isInstalled) => {});
+```
+
+## Example / Install a remote APK
+
+This can be used to upgrade your APK from a custom source or install other apps.
+No additional permissions are required.
+
+```javascript
+SendIntentAndroid.installRemoteApp('https://example.com/my-app.apk', 'my-saved-app.apk').then((installWasStarted) => {});
 ```
 
 ## Example / Open App
