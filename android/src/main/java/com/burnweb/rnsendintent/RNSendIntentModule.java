@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Calendars;
 import android.provider.CalendarContract.Events;
+import android.os.Environment;
 import android.util.Log;
 import android.net.Uri;
 
@@ -17,6 +18,8 @@ import java.lang.SecurityException;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.io.File;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.NativeModule;
@@ -27,6 +30,16 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Call;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+
+import okio.Okio;
+import okio.BufferedSink;
+import okio.BufferedSource;
 
 public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
@@ -211,6 +224,57 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         }
 
         promise.resolve(true);
+    }
+
+    @ReactMethod
+    public void installRemoteApp(final String uri, final String saveAs, final Promise promise) {
+      final File file = new File(this.reactContext.getExternalFilesDir(null), saveAs);
+
+      final Request request = new Request.Builder().url(uri).build();
+      new OkHttpClient()
+      .newCall(request)
+      .enqueue(new okhttp3.Callback() {
+        @Override
+        public void onFailure(final Call call, final IOException e) {
+          e.printStackTrace();
+          promise.resolve(false);
+        }
+
+        private void saveFile(final ResponseBody body) throws IOException, FileNotFoundException {
+          final BufferedSource source = body.source();
+          final BufferedSink sink = Okio.buffer(Okio.sink(file));
+
+          sink.writeAll(source);
+
+          sink.flush();
+          sink.close();
+          source.close();
+        }
+
+        @Override
+        public void onResponse(final Call call, final Response response) {
+          if(!response.isSuccessful()) {
+            promise.resolve(false);
+            return;
+          }
+
+          try (final ResponseBody body = response.body()) {
+            saveFile(body);
+
+            final Intent intent = new Intent(Intent.ACTION_VIEW)
+                                  .setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            reactContext.startActivity(intent);
+
+            promise.resolve(true);
+          }
+          catch (final Exception e) {
+            e.printStackTrace();
+            promise.resolve(false);
+          }
+        }
+      });
     }
 
     @ReactMethod

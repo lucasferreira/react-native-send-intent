@@ -35,6 +35,9 @@ var SendIntentAndroid = {
     isAppInstalled(packageName) {
         return RNSendIntentAndroid.isAppInstalled(packageName);
     },
+    installRemoteApp(uri, saveAs) {
+        return RNSendIntentAndroid.installRemoteApp(uri, saveAs);
+    },
     openApp(packageName, extras) {
         return RNSendIntentAndroid.openApp(packageName, (extras || {}));
     },
