@@ -9,6 +9,8 @@ import android.provider.CalendarContract.Events;
 import android.os.Environment;
 import android.util.Log;
 import android.net.Uri;
+import android.telephony.TelephonyManager;
+import android.content.Context;
 
 import java.util.Map;
 import java.util.HashMap;
