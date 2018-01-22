@@ -70,6 +70,13 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
       return constants;
     }
 
+    @ReactMethod
+    public String getVoiceMailNumber() {
+      TelephonyManager tm =(TelephonyManager)this.reactContext.getSystemService(Context.TELEPHONY_SERVICE);
+
+      return tm.getVoiceMailNumber();
+    }
+
     private Intent getSendIntent(String text, String type) {
       Intent sendIntent = new Intent();
       sendIntent.setAction(Intent.ACTION_SEND);
