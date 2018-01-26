@@ -9,6 +9,8 @@ import android.provider.CalendarContract.Events;
 import android.os.Environment;
 import android.util.Log;
 import android.net.Uri;
+import android.telephony.TelephonyManager;
+import android.content.Context;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -68,6 +70,12 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
       constants.put("TEXT_PLAIN", TEXT_PLAIN);
       constants.put("TEXT_HTML", TEXT_HTML);
       return constants;
+    }
+
+    @ReactMethod
+    public void getVoiceMailNumber(final Promise promise) {
+      TelephonyManager tm =(TelephonyManager)this.reactContext.getSystemService(Context.TELEPHONY_SERVICE);
+      promise.resolve(tm.getVoiceMailNumber());
     }
 
     private Intent getSendIntent(String text, String type) {
