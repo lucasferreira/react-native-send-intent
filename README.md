@@ -281,6 +281,23 @@ Opens a specified settings screen when passed one of the constant values availab
   SendIntentAndroid.openSettings('android.settings.SECURITY_SETTINGS');
 ```
 
+## Example / Get voiceMail number
+Please add this line to your AndroidManifest.xml file before using this example:
+
+```xml
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+```
+
+```javascript
+  SendIntentAndroid.getVoiceMailNumber().then(voiceMailNumber => {
+    if (!voiceMailNumber) {
+      return console.error('Can`t get voiceMailNumber');
+    }
+
+    //if u want to use next line, u need to add CALL_PHONE permission
+    SendIntentAndroid.sendPhoneCall(voiceMailNumber);
+  });
+```
 
 ## License
 MIT
