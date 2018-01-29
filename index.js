@@ -67,6 +67,9 @@ var SendIntentAndroid = {
     },
     openSettings(settingsName) {
         RNSendIntentAndroid.openSettings(settingsName);
+    },
+    getVoiceMailNumber() {
+      return RNSendIntentAndroid.getVoiceMailNumber();
     }
 };
 
