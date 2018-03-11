@@ -31,6 +31,8 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 
 import okhttp3.OkHttpClient;
@@ -86,6 +88,146 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
       sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
       return sendIntent;
+    }
+
+    private boolean parseExtras(ReadableMap extras, Intent intent) {
+        ReadableMapKeySetIterator it = extras.keySetIterator();
+
+        while(it.hasNextKey()) {
+            String key = it.nextKey();
+            ReadableType type = extras.getType(key);
+            
+            switch (type) {
+                case Boolean:
+                    intent.putExtra(key, extras.getBoolean(key));
+                    break;
+                case Map:
+                    //because in js, there is no distinction between double, int, short, etc. we use an object indicating the type
+                    ReadableMap map = extras.getMap(key);
+                    if (map.hasKey("type")) {
+                        String actualType = map.getString("type").toLowerCase();
+                        switch (actualType) {
+                            case "int":
+                                intent.putExtra(key, map.getInt("value"));
+                                break;
+                            case "short":
+                                intent.putExtra(key, (short)map.getInt("value"));
+                                break;
+                            case "byte":
+                                intent.putExtra(key, (byte)map.getInt("value"));
+                                break;
+                            case "char":
+                                intent.putExtra(key, (char)map.getInt("value"));
+                                break;
+                            case "long":
+                                intent.putExtra(key, (long)map.getDouble("value"));
+                                break;
+                            case "float":
+                                intent.putExtra(key, (float)map.getDouble("value"));
+                                break;
+                            case "double":
+                                intent.putExtra(key, map.getDouble("value"));
+                                break;
+                        }
+                    }
+                    else {
+                        return false;
+                    }
+                    break;
+                case Number:
+                    intent.putExtra(key, (double) extras.getDouble(key));
+                    break;
+                case String:
+                    intent.putExtra(key, extras.getString(key));
+                    break;
+                case Array:
+                    ReadableArray array = extras.getArray(key);
+                    if (array.size() == 0) {
+                        return false;
+                    }
+
+                    //try to infer the type of the array from the first element
+                    ReadableType arrayType = array.getType(0);
+                    switch (arrayType) {
+                        case Boolean:
+                            boolean[] bArray = new boolean[array.size()];
+                            for (int i = 0; i < array.size(); ++i)
+                                bArray[i] = array.getBoolean(i);
+                            intent.putExtra(key, bArray);
+                            break;
+                        case Map:
+                            ReadableMap aMap = extras.getMap(key);
+                            if (aMap.hasKey("type")) {
+                                String actualType = aMap.getString("type").toLowerCase();
+                                switch (actualType) {
+                                    case "int":
+                                        int[] iArray = new int[array.size()];
+                                        for (int i = 0; i < array.size(); ++i)
+                                            iArray[i] = array.getInt(i);
+                                        intent.putExtra(key, iArray);
+                                        break;
+                                    case "short":
+                                        short[] shArray = new short[array.size()];
+                                        for (int i = 0; i < array.size(); ++i)
+                                            shArray[i] = (short)array.getInt(i);
+                                        intent.putExtra(key, shArray);
+                                        break;
+                                    case "byte":
+                                        byte[] byArray = new byte[array.size()];
+                                        for (int i = 0; i < array.size(); ++i)
+                                            byArray[i] = (byte)array.getInt(i);
+                                        intent.putExtra(key, byArray);
+                                        break;
+                                    case "char":
+                                        char[] cArray = new char[array.size()];
+                                        for (int i = 0; i < array.size(); ++i)
+                                            cArray[i] = (char)array.getInt(i);
+                                        intent.putExtra(key, cArray);
+                                        break;
+                                    case "long":
+                                        long[] lArray = new long[array.size()];
+                                        for (int i = 0; i < array.size(); ++i)
+                                            lArray[i] = (long)array.getInt(i);
+                                        intent.putExtra(key, lArray);
+                                        break;
+                                    case "float":
+                                        float[] fArray = new float[array.size()];
+                                        for (int i = 0; i < array.size(); ++i)
+                                            fArray[i] = (float)array.getDouble(i);
+                                        intent.putExtra(key, fArray);
+                                        break;
+                                    case "double":
+                                        double[] doArray = new double[array.size()];
+                                        for (int i = 0; i < array.size(); ++i)
+                                            doArray[i] = array.getDouble(i);
+                                        intent.putExtra(key, doArray);
+                                        break;
+                                }
+                            }
+                            else {
+                                return false;
+                            }
+                            break;
+                        case Number:
+                            double[] dArray = new double[array.size()];
+                            for (int i = 0; i < array.size(); ++i)
+                                dArray[i] = array.getDouble(i);
+                            intent.putExtra(key, dArray);
+                            break;
+                        case String:
+                            String[] sArray = new String[array.size()];
+                            for (int i = 0; i < array.size(); ++i)
+                                sArray[i] = array.getString(i);
+                            intent.putExtra(key, sArray);
+                            break;
+                    }
+
+                    break;
+                  //ignore everything else
+            }
+        }
+
+        return true;
     }
 
     @ReactMethod
@@ -293,12 +435,8 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
             return;
         }
 
-        final ReadableMapKeySetIterator it = extras.keySetIterator();
-        while(it.hasNextKey()) {
-          final String key = it.nextKey();
-          final String value = extras.getString(key);
-          sendIntent.putExtra(key, value);
-        }
+        if (!parseExtras(extras, sendIntent)) //extras could not be parsed
+            promise.resolve(false);
 
         sendIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         this.reactContext.startActivity(sendIntent);
@@ -353,6 +491,24 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         if (currentActivity != null) {
             currentActivity.startActivity(Intent.createChooser(intent, title));
         }
+    }
+
+    @ReactMethod
+    public void openAppWithData(String packageName, String dataUri, String mimeType, ReadableMap extras, final Promise promise) {
+        Uri uri = Uri.parse(dataUri);
+        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+        if (mimeType != null)
+            sendIntent.setDataAndType(uri, mimeType);
+        else
+            sendIntent.setData(uri);
+        
+        sendIntent.setPackage(packageName);
+        
+        parseExtras(extras, sendIntent);
+
+        //sendIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        this.reactContext.startActivity(sendIntent);
+        promise.resolve(true);
     }
 
     @ReactMethod
