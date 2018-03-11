@@ -130,7 +130,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
                                 break;
                         }
                     }
-                    else {
+                    else { //not parsing real maps for now
                         return false;
                     }
                     break;
@@ -142,7 +142,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
                     break;
                 case Array:
                     ReadableArray array = extras.getArray(key);
-                    if (array.size() == 0) {
+                    if (array.size() == 0) { //cannot guess the type of an empty array
                         return false;
                     }
 
@@ -204,7 +204,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
                                         break;
                                 }
                             }
-                            else {
+                            else { //not parsing real maps for now
                                 return false;
                             }
                             break;
@@ -435,8 +435,10 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
             return;
         }
 
-        if (!parseExtras(extras, sendIntent)) //extras could not be parsed
+        if (!parseExtras(extras, sendIntent)) {
             promise.resolve(false);
+            return;
+        }
 
         sendIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         this.reactContext.startActivity(sendIntent);
@@ -504,7 +506,10 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         
         sendIntent.setPackage(packageName);
         
-        parseExtras(extras, sendIntent);
+        if (!parseExtras(extras, sendIntent)) {
+            promise.resolve(false);
+            return;
+        }
 
         //sendIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         this.reactContext.startActivity(sendIntent);

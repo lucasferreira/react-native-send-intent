@@ -77,7 +77,7 @@ var SendIntentAndroid = {
      * Other possible types are int, short, byte, char, long and float.
      */
     openAppWithData(packageName, dataUri, mimeType, extras) {
-        RNSendIntentAndroid.openAppWithData(packageName, dataUri, mimeType, (extras || {}));
+        return RNSendIntentAndroid.openAppWithData(packageName, dataUri, mimeType, (extras || {}));
     }
 };
 
