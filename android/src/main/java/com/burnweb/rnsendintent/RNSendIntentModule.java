@@ -512,6 +512,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         }
 
         //sendIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.reactContext.startActivity(sendIntent);
         promise.resolve(true);
     }
