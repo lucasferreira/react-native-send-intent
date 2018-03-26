@@ -5,7 +5,7 @@
 'use strict';
 
 var { Platform, NativeModules } = require('react-native');
-var RNSendIntentAndroid = NativeModules.SendIntentAndroid;
+var RNSendIntentAndroid = NativeModules.SendIntentAndroid||{};
 
 var SendIntentAndroid = {
     TEXT_PLAIN: (Platform.OS === 'android') ? RNSendIntentAndroid.TEXT_PLAIN : 'text/plain',
