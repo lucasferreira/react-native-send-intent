@@ -2,22 +2,19 @@
  * @providesModule SendIntentAndroid
  */
 
-'use strict';
+"use strict";
 
-var { Platform, NativeModules } = require('react-native');
+var { Platform, NativeModules } = require("react-native");
 var RNSendIntentAndroid = NativeModules.SendIntentAndroid;
 
 var SendIntentAndroid = {
-    TEXT_PLAIN: (Platform.OS === 'android') ? RNSendIntentAndroid.TEXT_PLAIN : 'text/plain',
-    TEXT_HTML: (Platform.OS === 'android') ? RNSendIntentAndroid.TEXT_HTML : 'text/html',
+    TEXT_PLAIN: Platform.OS === "android" ? RNSendIntentAndroid.TEXT_PLAIN : "text/plain",
+    TEXT_HTML: Platform.OS === "android" ? RNSendIntentAndroid.TEXT_HTML : "text/html",
     sendText(config) {
-        if("title" in config && config.title != null && config.title.length > 0)
-        {
-            RNSendIntentAndroid.sendTextWithTitle(config.title, config.text, (config.type||"text/plain"));
-        }
-        else
-        {
-            RNSendIntentAndroid.sendText(config.text, (config.type||"text/plain"));
+        if ("title" in config && config.title != null && config.title.length > 0) {
+            RNSendIntentAndroid.sendTextWithTitle(config.title, config.text, config.type || "text/plain");
+        } else {
+            RNSendIntentAndroid.sendText(config.text, config.type || "text/plain");
         }
     },
     sendPhoneCall(phoneNumber) {
@@ -27,10 +24,18 @@ var SendIntentAndroid = {
         RNSendIntentAndroid.sendPhoneDial(phoneNumber);
     },
     sendSms(phoneNumber, body) {
-        RNSendIntentAndroid.sendSms(phoneNumber, (body||null));
+        RNSendIntentAndroid.sendSms(phoneNumber, body || null);
     },
     addCalendarEvent(config) {
-        RNSendIntentAndroid.addCalendarEvent(config.title, config.description, config.startDate, config.endDate, config.recurrence, config.location, config.isAllDay||false);
+        RNSendIntentAndroid.addCalendarEvent(
+            config.title,
+            config.description,
+            config.startDate,
+            config.endDate,
+            config.recurrence,
+            config.location,
+            config.isAllDay || false
+        );
     },
     isAppInstalled(packageName) {
         return RNSendIntentAndroid.isAppInstalled(packageName);
@@ -38,17 +43,14 @@ var SendIntentAndroid = {
     installRemoteApp(uri, saveAs) {
         return RNSendIntentAndroid.installRemoteApp(uri, saveAs);
     },
-    openApp(packageName, extras) {
-        return RNSendIntentAndroid.openApp(packageName, (extras || {}));
-    },
     openCalendar() {
         RNSendIntentAndroid.openCalendar();
     },
     sendMail(mail, subject, body) {
-        RNSendIntentAndroid.sendMail(mail, (subject || ''), (body || ''));
+        RNSendIntentAndroid.sendMail(mail, subject || "", body || "");
     },
     openChooserWithOptions(options: Object, title: string) {
-      RNSendIntentAndroid.openChooserWithOptions(options, title);
+        RNSendIntentAndroid.openChooserWithOptions(options, title);
     },
     openMaps(query) {
         RNSendIntentAndroid.openMaps(query);
@@ -69,7 +71,10 @@ var SendIntentAndroid = {
         RNSendIntentAndroid.openSettings(settingsName);
     },
     getVoiceMailNumber() {
-      return RNSendIntentAndroid.getVoiceMailNumber();
+        return RNSendIntentAndroid.getVoiceMailNumber();
+    },
+    openApp(packageName, extras) {
+        return RNSendIntentAndroid.openApp(packageName, extras || {});
     },
     /** Creates an ACTION_VIEW Intent for the given package with the given data, optional mimetype and extras.
      *  The extras are an object containing String, or other objects of the following format:
@@ -77,8 +82,8 @@ var SendIntentAndroid = {
      * Other possible types are int, short, byte, char, long and float.
      */
     openAppWithData(packageName, dataUri, mimeType, extras) {
-        return RNSendIntentAndroid.openAppWithData(packageName, dataUri, mimeType, (extras || {}));
-    }
+        return RNSendIntentAndroid.openAppWithData(packageName, dataUri, mimeType, extras || {});
+    },
 };
 
 module.exports = SendIntentAndroid;
