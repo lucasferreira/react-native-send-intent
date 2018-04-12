@@ -70,6 +70,14 @@ var SendIntentAndroid = {
     },
     getVoiceMailNumber() {
       return RNSendIntentAndroid.getVoiceMailNumber();
+    },
+    /** Creates an ACTION_VIEW Intent for the given package with the given data, optional mimetype and extras.
+     *  The extras are an object containing String, or other objects of the following format:
+     * { type: "int", value: 4 }
+     * Other possible types are int, short, byte, char, long and float.
+     */
+    openAppWithData(packageName, dataUri, mimeType, extras) {
+        return RNSendIntentAndroid.openAppWithData(packageName, dataUri, mimeType, (extras || {}));
     }
 };
 
