@@ -212,6 +212,33 @@ Opens Androids default share tray:
 
 ```
 
+## Example / Open Multiple Files Share With dialog
+
+Opens Androids default share tray:
+
+```javascript
+  // Create Multiple Files Share With dialog.
+  SendIntentAndroid.openChooserWithMultipleOptions([{
+    subject: 'Video One Title',
+    videoUrl: '/path_or_url/to/video.mp4',
+  },
+  {
+    subject: 'Video Two Title',
+    videoUrl: '/path_or_url/to/video2.mp4',
+  },'Share videos to');
+
+  SendIntentAndroid.openChooserWithMultipleOptions([{
+    subject: 'Video Title',
+    text: 'Test shared with video',
+  },
+  {
+    subject: 'Video Title',
+    videoUrl: '/path_or_url/to/video.mp4',
+  },'Share video to');
+
+```
+
+
 ## Example / Open Maps
 
 Opens Androids default maps app with location:
