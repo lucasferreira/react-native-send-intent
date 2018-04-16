@@ -225,7 +225,7 @@ Opens Androids default share tray:
   {
     subject: 'Video Two Title',
     videoUrl: '/path_or_url/to/video2.mp4',
-  },'Share videos to');
+  }],'Share videos to');
 
   SendIntentAndroid.openChooserWithMultipleOptions([{
     subject: 'Video Title',
@@ -234,7 +234,7 @@ Opens Androids default share tray:
   {
     subject: 'Video Title',
     videoUrl: '/path_or_url/to/video.mp4',
-  },'Share video to');
+  }],'Share video to');
 
 ```
 
