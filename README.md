@@ -83,6 +83,7 @@ SendIntentAndroid.sendText({
 var SendIntentAndroid = require('react-native-send-intent');
 
 SendIntentAndroid.sendMail("your@address.com", "Subject test", "Test body");
+```
 
 ## Example / Usage of SMS
 Thanks to @pedro ;)
@@ -165,6 +166,20 @@ SendIntentAndroid.openApp('com.google.android.gm').then((wasOpened) => {});
 
 // You can also specify arbitrary intent extras to be passed to the app
 SendIntentAndroid.openApp('com.mycorp.myapp', {"com.mycorp.myapp.reason": "just because", "com.mycorp.myapp.data": "must be a string"}).then((wasOpened) => {});
+```
+
+## Example / Open App with Data
+
+Opens MX Player (Free) app and starts a video at the 1 minute mark.
+Returns a promise with a boolean telling if the app was opened or not:
+
+```javascript
+SendIntentAndroid.openAppWithData("com.mxtech.videoplayer.ad",
+  "http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_surround-fix.avi",
+  "video/*", {
+    position: { type: "int", value: 60 }
+  }
+).then((wasOpened) => {});
 ```
 
 ## Example / Open Calendar
