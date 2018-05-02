@@ -14,6 +14,7 @@ import android.content.Context;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Arrays;
 import java.lang.SecurityException;
@@ -487,6 +488,53 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
             intent.setType("text/plain");
         }
 
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        Activity currentActivity = getCurrentActivity();
+        if (currentActivity != null) {
+            currentActivity.startActivity(Intent.createChooser(intent, title));
+        }
+    }
+
+    @ReactMethod
+    public void openChooserWithMultipleOptions(ReadableArray option, String title) {
+
+        ArrayList<Object> readable = option.toArrayList();
+        Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+ 
+          String name = Intent.EXTRA_TEXT;
+          ArrayList<Object> values = new ArrayList<>();
+
+          for(int i = 0; i < option.size(); i++){
+            ReadableMap options = option.getMap(i);
+
+            if (options.hasKey("subject")) {
+                intent.putExtra(Intent.EXTRA_SUBJECT, options.getString("subject"));
+            }
+            if (options.hasKey("text")) {
+                intent.putExtra(Intent.EXTRA_TEXT, options.getString("text"));
+            }
+
+            if (options.hasKey("imageUrl")) {
+                Uri uri = Uri.parse(options.getString("imageUrl"));
+                name = Intent.EXTRA_STREAM;
+                values.add(uri);
+                intent.setType("image/*");
+            } else if (options.hasKey("videoUrl")) {
+                File media = new File(options.getString("videoUrl"));
+                Uri uri = Uri.fromFile(media);
+                if(!options.hasKey("subject")) {
+                  intent.putExtra(Intent.EXTRA_SUBJECT,"Untitled_Video");
+                }
+                name = Intent.EXTRA_STREAM;
+                values.add(uri);
+                intent.setType("video/*");
+            } else {
+                intent.setType("text/plain");
+            }
+        }
+
+        intent.putExtra(name, values);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         Activity currentActivity = getCurrentActivity();
