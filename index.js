@@ -15,8 +15,8 @@ var SendIntentAndroid = {
             RNSendIntentAndroid.sendText(config.text, config.type || "text/plain");
         }
     },
-    sendPhoneCall(phoneNumber) {
-        RNSendIntentAndroid.sendPhoneCall(phoneNumber);
+    sendPhoneCall(phoneNumber, dialOnly = false) {
+        RNSendIntentAndroid.sendPhoneCall(phoneNumber, dialOnly);
     },
     sendPhoneDial(phoneNumber) {
         RNSendIntentAndroid.sendPhoneDial(phoneNumber);
