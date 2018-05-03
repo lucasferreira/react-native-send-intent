@@ -15,11 +15,11 @@ var SendIntentAndroid = {
             RNSendIntentAndroid.sendText(config.text, config.type || "text/plain");
         }
     },
-    sendPhoneCall(phoneNumber) {
-        RNSendIntentAndroid.sendPhoneCall(phoneNumber);
+    sendPhoneCall(phoneNumber, phoneAppOnly = false) {
+        RNSendIntentAndroid.sendPhoneCall(phoneNumber, phoneAppOnly);
     },
-    sendPhoneDial(phoneNumber) {
-        RNSendIntentAndroid.sendPhoneDial(phoneNumber);
+    sendPhoneDial(phoneNumber, phoneAppOnly = false) {
+        RNSendIntentAndroid.sendPhoneDial(phoneNumber, phoneAppOnly);
     },
     sendSms(phoneNumber, body) {
         RNSendIntentAndroid.sendSms(phoneNumber, body || null);
