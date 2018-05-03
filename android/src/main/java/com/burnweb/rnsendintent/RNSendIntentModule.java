@@ -257,7 +257,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         } catch(SecurityException ex) {
           Log.d(TAG, ex.getMessage());
 
-          this.sendPhoneDial(phoneNumberString);
+          this.sendPhoneDial(phoneNumberString, phoneAppOnly);
         }
       }
     }
