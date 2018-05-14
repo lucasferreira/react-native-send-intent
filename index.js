@@ -16,10 +16,10 @@ var SendIntentAndroid = {
         }
     },
     sendPhoneCall(phoneNumber, phoneAppOnly = false) {
-        RNSendIntentAndroid.sendPhoneCall(phoneNumber, phoneAppOnly);
+        RNSendIntentAndroid.sendPhoneCall(phoneNumber, phoneAppOnly || false);
     },
     sendPhoneDial(phoneNumber, phoneAppOnly = false) {
-        RNSendIntentAndroid.sendPhoneDial(phoneNumber, phoneAppOnly);
+        RNSendIntentAndroid.sendPhoneDial(phoneNumber, phoneAppOnly || false);
     },
     sendSms(phoneNumber, body) {
         RNSendIntentAndroid.sendSms(phoneNumber, body || null);
