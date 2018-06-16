@@ -96,6 +96,7 @@ SendIntentAndroid.sendSms('+55 48 9999-9999', 'SMS body text here');
 
 ## Example / Usage of Phone Calls
 It's very important ask for permission in your AndroidManifest.xml file if you need to use Phone Calls directly.
+You can add an optional second parameter, to fix the default phone app.
 
 Please add this line to your XML before using this example:
 
@@ -108,16 +109,17 @@ And them you can call in your JavaScript files:
 ```javascript
 var SendIntentAndroid = require('react-native-send-intent');
 
-SendIntentAndroid.sendPhoneCall('+55 48 9999-9999');
+SendIntentAndroid.sendPhoneCall('+55 48 9999-9999', true);
 ```
 
 ## Example / Usage of Phone Dial Screen
 For this use you doesn't need to ask any permission.
+You can add an optional second parameter, to fix the default phone app.
 
 ```javascript
 var SendIntentAndroid = require('react-native-send-intent');
 
-SendIntentAndroid.sendPhoneDial('+55 48 9999-9999');
+SendIntentAndroid.sendPhoneDial('+55 48 9999-9999', false);
 ```
 
 ## Example / Create Calendar Event
