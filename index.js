@@ -16,13 +16,13 @@ var SendIntentAndroid = {
         }
     },
     sendPhoneCall(phoneNumber, phoneAppOnly = false) {
-        RNSendIntentAndroid.sendPhoneCall(phoneNumber, phoneAppOnly || false);
+        RNSendIntentAndroid.sendPhoneCall(phoneNumber, phoneAppOnly);
     },
     sendPhoneDial(phoneNumber, phoneAppOnly = false) {
-        RNSendIntentAndroid.sendPhoneDial(phoneNumber, phoneAppOnly || false);
+        RNSendIntentAndroid.sendPhoneDial(phoneNumber, phoneAppOnly);
     },
-    sendSms(phoneNumber, body) {
-        RNSendIntentAndroid.sendSms(phoneNumber, body || null);
+    sendSms(phoneNumber, body = null) {
+        RNSendIntentAndroid.sendSms(phoneNumber, body);
     },
     addCalendarEvent(config) {
         RNSendIntentAndroid.addCalendarEvent(
@@ -44,13 +44,13 @@ var SendIntentAndroid = {
     openCalendar() {
         RNSendIntentAndroid.openCalendar();
     },
-    sendMail(mail, subject, body) {
-        RNSendIntentAndroid.sendMail(mail, subject || "", body || "");
+    sendMail(mail, subject = "", body = "") {
+        RNSendIntentAndroid.sendMail(mail, subject, body);
     },
-    openChooserWithOptions(options: Object, title: string) {
+    openChooserWithOptions(options, title) {
         RNSendIntentAndroid.openChooserWithOptions(options, title);
     },
-    openChooserWithMultipleOptions(options: Array, title: string) {
+    openChooserWithMultipleOptions(options, title) {
         RNSendIntentAndroid.openChooserWithMultipleOptions(options, title);
     },
     openMaps(query) {
@@ -62,7 +62,7 @@ var SendIntentAndroid = {
     openMapsWithRoute(query, mode) {
         RNSendIntentAndroid.openMapsWithRoute(query, mode);
     },
-    shareTextToLine(options: Object) {
+    shareTextToLine(options) {
         RNSendIntentAndroid.shareTextToLine(options);
     },
     shareImageToInstagram(type, mediaPath) {
