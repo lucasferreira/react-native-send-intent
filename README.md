@@ -343,5 +343,17 @@ Please add this line to your AndroidManifest.xml file before using this example:
   });
 ```
 
+## Example / Open File Chooser
+
+Opens Android chooser so the user can select which app will handle the file
+
+```javascript
+    SendIntentAndroid.openFileChooser({
+        subject: 'File subject', //optional,
+        fileUrl: '/path_or_url/to/file',
+        type: 'file_mimetype' 
+    }, 'Open file with:')
+```
+
 ## License
 MIT

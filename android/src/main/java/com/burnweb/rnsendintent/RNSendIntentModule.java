@@ -643,4 +643,22 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         }
     }
 
+    @ReactMethod
+    public void openFileChooser(ReadableMap options, String title) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+
+        if (options.hasKey("subject")) {
+            intent.putExtra(Intent.EXTRA_SUBJECT, options.getString("subject"));
+        }
+
+        File fileUrl = new File(options.getString("fileUrl"));
+        intent.setDataAndType(Uri.fromFile(fileUrl), options.getString("type"));
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Activity currentActivity = getCurrentActivity();
+        if (currentActivity != null) {
+            currentActivity.startActivity(Intent.createChooser(intent, title));
+        }
+    }
+
 }
