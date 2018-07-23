@@ -16,7 +16,7 @@ android {
         minSdkVersion _minSdkVersion
         targetSdkVersion _targetSdkVersion
         versionCode 20
-        versionName "1.0.27"
+        versionName "1.0.28"
     }
 }
 
