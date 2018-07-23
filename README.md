@@ -325,6 +325,7 @@ Opens a specified settings screen when passed one of the constant values availab
   SendIntentAndroid.openSettings('android.settings.SECURITY_SETTINGS');
 ```
 
+
 ## Example / Get voiceMail number
 Please add this line to your AndroidManifest.xml file before using next example:
 
@@ -343,13 +344,25 @@ Please add this line to your AndroidManifest.xml file before using next example:
   });
 ```
 
+
+## Example / Open File Chooser
+
+Opens Android chooser so the user can select which app will handle the file
+
+```javascript
+    SendIntentAndroid.openFileChooser({
+        subject: 'File subject', //optional,
+        fileUrl: '/path_or_url/to/file',
+        type: 'file_mimetype' 
+    }, 'Open file with:')
+```
+
 ## Example / Get phone number
 Please add this lines to your AndroidManifest.xml file before using next example:
 
 ```xml
   <uses-permission android:name="android.permission.READ_PHONE_STATE" />
   <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
-  <uses-permission android:name="android.permission.READ_SMS" />
 ```
 
 ```javascript
