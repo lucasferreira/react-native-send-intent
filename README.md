@@ -326,7 +326,7 @@ Opens a specified settings screen when passed one of the constant values availab
 ```
 
 ## Example / Get voiceMail number
-Please add this line to your AndroidManifest.xml file before using this example:
+Please add this line to your AndroidManifest.xml file before using next example:
 
 ```xml
   <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -340,6 +340,25 @@ Please add this line to your AndroidManifest.xml file before using this example:
 
     //if u want to use next line, u need to add CALL_PHONE permission
     SendIntentAndroid.sendPhoneCall(voiceMailNumber);
+  });
+```
+
+## Example / Get phone number
+Please add this lines to your AndroidManifest.xml file before using next example:
+
+```xml
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+  <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+  <uses-permission android:name="android.permission.READ_SMS" />
+```
+
+```javascript
+  SendIntentAndroid.getPhoneNumber().then(phoneNumber => {
+    if (!phoneNumber) {
+      return console.error('Can`t get phoneNumber');
+    }
+
+    //do something with number
   });
 ```
 

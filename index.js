@@ -74,6 +74,9 @@ var SendIntentAndroid = {
     getVoiceMailNumber() {
         return RNSendIntentAndroid.getVoiceMailNumber();
     },
+    getPhoneNumber() {
+        return RNSendIntentAndroid.getPhoneNumber();
+    },
     openApp(packageName, extras) {
         return RNSendIntentAndroid.openApp(packageName, extras || {});
     },
