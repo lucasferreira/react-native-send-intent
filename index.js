@@ -44,6 +44,9 @@ var SendIntentAndroid = {
     openCalendar() {
         RNSendIntentAndroid.openCalendar();
     },
+    openEmail() {
+        RNSendIntentAndroid.openEmail();
+    },
     sendMail(mail, subject = "", body = "") {
         RNSendIntentAndroid.sendMail(mail, subject, body);
     },

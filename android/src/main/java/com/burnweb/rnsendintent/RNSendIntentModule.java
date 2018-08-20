@@ -472,6 +472,15 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void openEmail() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_APP_EMAIL);
+        if (intent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+            this.reactContext.startActivity(Intent.createChooser(intent, "Selecione o aplicativo de email"));
+        }
+    }
+
+    @ReactMethod
     public void openChooserWithOptions(ReadableMap options, String title) {
 
         Intent intent = new Intent(Intent.ACTION_SEND);
