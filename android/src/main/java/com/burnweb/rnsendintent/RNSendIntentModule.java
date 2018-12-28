@@ -586,7 +586,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 	}
 
 	@ReactMethod
-	public void openWebIntent(String dataUri, final Promise promise) {
+	public void openChromeIntent(String dataUri, final Promise promise) {
 		// following intent syntax of: https://developer.chrome.com/multidevice/android/intents
 		Intent sendIntent;
 		PackageManager packageManager = this.reactContext.getPackageManager();
@@ -599,15 +599,17 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 			// if activity is found, meaning not null
 			if (info != null) {
 				this.reactContext.startActivity(sendIntent);
+				promise.resolve(true);
 			}
 			// if activity not found, load fallback URL from chrome intent
 			else {
 				String fallbackUrl = sendIntent.getStringExtra("browser_fallback_url");
 				Intent fallbackUrlIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(fallbackUrl));
 				this.reactContext.startActivity(fallbackUrlIntent);
+				promise.resolve(true);
 			}
 
-			promise.resolve(true);
+			promise.resolve(false);
 		} catch (Exception e) {
 			promise.resolve(false);
 		}

@@ -89,12 +89,12 @@ var SendIntentAndroid = {
         return RNSendIntentAndroid.openAppWithData(packageName, dataUri, mimeType, extras || {});
 	},
 	/**
-	 * following the web intent syntax of: https://developer.chrome.com/multidevice/android/intents
+	 * following the chrome intent syntax: https://developer.chrome.com/multidevice/android/intents
 	 * open intent with the package name that is defined in the dataUri field
 	 * else open the browser_fallback_url field in the mobile's browser
 	 */
-	openWebIntent(dataUri) {
-        return RNSendIntentAndroid.openWebIntent(dataUri);
+	openChromeIntent(dataUri) {
+        return RNSendIntentAndroid.openChromeIntent(dataUri);
     },
     openFileChooser(options, title) {
         return RNSendIntentAndroid.openFileChooser(options, title);
