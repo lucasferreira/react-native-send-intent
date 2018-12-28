@@ -88,6 +88,11 @@ var SendIntentAndroid = {
     openAppWithData(packageName, dataUri, mimeType, extras) {
         return RNSendIntentAndroid.openAppWithData(packageName, dataUri, mimeType, extras || {});
 	},
+	/**
+	 * following the web intent syntax of: https://developer.chrome.com/multidevice/android/intents
+	 * open intent with the package name that is defined in the dataUri field
+	 * else open the browser_fallback_url field in the mobile's browser
+	 */
 	openWebIntent(dataUri) {
         return RNSendIntentAndroid.openWebIntent(dataUri);
     },
