@@ -103,7 +103,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         while(it.hasNextKey()) {
             String key = it.nextKey();
             ReadableType type = extras.getType(key);
-            
+
             switch (type) {
                 case Boolean:
                     intent.putExtra(key, extras.getBoolean(key));
@@ -513,7 +513,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
         ArrayList<Object> readable = option.toArrayList();
         Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
- 
+
           String name = Intent.EXTRA_TEXT;
           ArrayList<Object> values = new ArrayList<>();
 
@@ -559,13 +559,26 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     public void openAppWithData(String packageName, String dataUri, String mimeType, ReadableMap extras, final Promise promise) {
         Uri uri = Uri.parse(dataUri);
         Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-        if (mimeType != null)
-            sendIntent.setDataAndType(uri, mimeType);
-        else
-            sendIntent.setData(uri);
-        
+        try {
+			if (uri.getScheme().equalsIgnoreCase("intent")) {
+				sendIntent = Intent.parseUri(uri.toString(), Intent.URI_INTENT_SCHEME);
+			} else {
+				sendIntent = new Intent(Intent.ACTION_VIEW);
+				if (mimeType != null)
+					sendIntent.setDataAndType(uri, mimeType);
+				else
+					sendIntent.setData(uri);
+			}
+		} catch (Exception e) {
+			sendIntent = new Intent(Intent.ACTION_VIEW);
+			if (mimeType != null)
+				sendIntent.setDataAndType(uri, mimeType);
+			else
+				sendIntent.setData(uri);
+		}
+
         sendIntent.setPackage(packageName);
-        
+
         if (!parseExtras(extras, sendIntent)) {
             promise.resolve(false);
             return;
