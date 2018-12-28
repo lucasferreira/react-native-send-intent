@@ -593,11 +593,15 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
 		try {
 			sendIntent = Intent.parseUri(dataUri, Intent.URI_INTENT_SCHEME);
+			// try to find activity that can handle the chrome intent
 			ResolveInfo info = packageManager.resolveActivity(sendIntent, 0);
 
+			// if activity is found, meaning not null
 			if (info != null) {
 				this.reactContext.startActivity(sendIntent);
-			} else {
+			}
+			// if activity not found, load fallback URL from chrome intent
+			else {
 				String fallbackUrl = sendIntent.getStringExtra("browser_fallback_url");
 				Intent fallbackUrlIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(fallbackUrl));
 				this.reactContext.startActivity(fallbackUrlIntent);
