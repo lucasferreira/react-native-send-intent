@@ -184,6 +184,22 @@ SendIntentAndroid.openAppWithData("com.mxtech.videoplayer.ad",
 ).then((wasOpened) => {});
 ```
 
+## Example / Open Chrome Intent
+
+Opens Chrome intent as defined in https://developer.chrome.com/multidevice/android/intents
+
+Returns a promise with a boolean.
+
+True if: the intent was handled by an activity or the browser opened the `browser_fallback_url`
+
+False if both conditions are not fulfilled
+
+```javascript
+SendIntentAndroid.openChromeIntent("intent://www.spm.com/qrlogin/?transactionid=abc&nodeid=1#Intent;scheme=https;package=example.package;S.browser_fallback_url=https://www.spm.com/qrlogin;end",
+  }
+).then((wasOpened) => {});
+```
+
 ## Example / Open Calendar
 
 ```javascript
@@ -353,7 +369,7 @@ Opens Android chooser so the user can select which app will handle the file
     SendIntentAndroid.openFileChooser({
         subject: 'File subject', //optional,
         fileUrl: '/path_or_url/to/file',
-        type: 'file_mimetype' 
+        type: 'file_mimetype'
     }, 'Open file with:')
 ```
 
