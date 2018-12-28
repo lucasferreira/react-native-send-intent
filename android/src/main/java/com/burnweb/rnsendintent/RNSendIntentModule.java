@@ -600,6 +600,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 			if (info != null) {
 				this.reactContext.startActivity(sendIntent);
 				promise.resolve(true);
+				return;
 			}
 			// if activity not found, load fallback URL from chrome intent
 			else {
@@ -607,10 +608,12 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 				Intent fallbackUrlIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(fallbackUrl));
 				this.reactContext.startActivity(fallbackUrlIntent);
 				promise.resolve(true);
+				return;
 			}
 
 			promise.resolve(false);
 		} catch (Exception e) {
+			e.printStackTrace();
 			promise.resolve(false);
 		}
 	}
