@@ -593,6 +593,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
 		try {
 			sendIntent = Intent.parseUri(dataUri, Intent.URI_INTENT_SCHEME);
+			sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			// try to find activity that can handle the chrome intent
 			ResolveInfo info = packageManager.resolveActivity(sendIntent, 0);
 
