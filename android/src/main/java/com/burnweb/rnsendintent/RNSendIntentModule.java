@@ -9,6 +9,8 @@ import android.provider.CalendarContract.Events;
 import android.os.Environment;
 import android.util.Log;
 import android.net.Uri;
+import android.os.Build;
+import android.support.v4.content.FileProvider;
 import android.telephony.TelephonyManager;
 import android.content.Context;
 
@@ -658,7 +660,12 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         }
 
         File fileUrl = new File(options.getString("fileUrl"));
-        intent.setDataAndType(Uri.fromFile(fileUrl), options.getString("type"));
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            Uri uri = FileProvider.getUriForFile(this.reactContext, this.reactContext.getPackageName() + ".fileprovider", fileUrl);
+            intent.setDataAndType(uri, options.getString("type"));
+        } else {
+            intent.setDataAndType(Uri.fromFile(fileUrl), options.getString("type"));
+        }
 
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Activity currentActivity = getCurrentActivity();
