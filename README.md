@@ -196,6 +196,12 @@ SendIntentAndroid.openCalendar();
 SendIntentAndroid.openCamera();
 ```
 
+## Example / Open Email Application
+
+```javascript
+SendIntentAndroid.openEmailApp();
+```
+
 ## Example / Open Share With dialog
 
 Opens Androids default share tray:
