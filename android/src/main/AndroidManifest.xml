@@ -6,7 +6,7 @@
                 android:name=".RNSendIntentModule"
                 android:exported="true" />
         <provider
-                android:name="android.support.v4.content.FileProvider"
+                android:name="com.burnweb.rnsendintent.FileProvider"
                 android:authorities="${applicationId}.fileprovider"
                 android:exported="false"
                 android:grantUriPermissions="true">
