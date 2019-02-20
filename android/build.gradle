@@ -16,7 +16,7 @@ android {
         minSdkVersion _minSdkVersion
         targetSdkVersion _targetSdkVersion
         versionCode 21
-        versionName "1.0.29"
+        versionName "1.0.30"
     }
 }
 
