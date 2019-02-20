@@ -674,4 +674,13 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         }
     }
 
+    @ReactMethod
+    public void openEmailApp() {
+      Intent sendIntent = new Intent(Intent.ACTION_MAIN);
+      sendIntent.addCategory(Intent.CATEGORY_APP_EMAIL);
+      if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+          this.reactContext.startActivity(sendIntent);
+      }
+    }
+
 }
