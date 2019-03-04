@@ -93,6 +93,12 @@ var SendIntentAndroid = {
     },
     openEmailApp() {
         RNSendIntentAndroid.openEmailApp();
+    },
+    requestIgnoreBatteryOptimizations() {
+        return RNSendIntentAndroid.requestIgnoreBatteryOptimizations();
+    },
+    showIgnoreBatteryOptimizationsSettings() {
+        RNSendIntentAndroid.showIgnoreBatteryOptimizationsSettings();
     }
 };
 
