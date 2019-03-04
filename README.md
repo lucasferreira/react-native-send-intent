@@ -195,7 +195,7 @@ True if: the intent was handled by an activity or the browser opened the `browse
 False if both conditions are not fulfilled
 
 ```javascript
-SendIntentAndroid.openChromeIntent("intent://www.spm.com/qrlogin/?transactionid=abc&nodeid=1#Intent;scheme=https;package=example.package;S.browser_fallback_url=https://www.spm.com/qrlogin;end",
+SendIntentAndroid.openChromeIntent("intent://www.spm.com/qrlogin#Intent;scheme=https;package=example.package;S.browser_fallback_url=https://www.spm.com/download;end",
   }
 ).then((wasOpened) => {});
 ```
