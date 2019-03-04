@@ -1,3 +1,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.burnweb.rnsendintent">
+
+    <application>
+        <service
+                android:name=".RNSendIntentModule"
+                android:exported="true" />
+        <provider
+                android:name="com.burnweb.rnsendintent.FileProvider"
+                android:authorities="${applicationId}.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/file_paths" />
+
+        </provider>
+
+    </application>
 </manifest>

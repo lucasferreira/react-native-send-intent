@@ -99,6 +99,9 @@ var SendIntentAndroid = {
     openFileChooser(options, title) {
         return RNSendIntentAndroid.openFileChooser(options, title);
     },
+    openEmailApp() {
+        RNSendIntentAndroid.openEmailApp();
+    }
 };
 
 module.exports = SendIntentAndroid;
