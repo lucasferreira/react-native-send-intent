@@ -579,41 +579,41 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.reactContext.startActivity(sendIntent);
         promise.resolve(true);
-	}
+    }
 
-	@ReactMethod
-	public void openChromeIntent(String dataUri, final Promise promise) {
-		// following intent syntax of: https://developer.chrome.com/multidevice/android/intents
-		Intent sendIntent;
-		PackageManager packageManager = this.reactContext.getPackageManager();
+    @ReactMethod
+    public void openChromeIntent(String dataUri, final Promise promise) {
+        // following intent syntax of: https://developer.chrome.com/multidevice/android/intents
+        Intent sendIntent;
+        PackageManager packageManager = this.reactContext.getPackageManager();
 
-		try {
-			sendIntent = Intent.parseUri(dataUri, Intent.URI_INTENT_SCHEME);
-			sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			// try to find activity that can handle the chrome intent
-			ResolveInfo info = packageManager.resolveActivity(sendIntent, 0);
+        try {
+            sendIntent = Intent.parseUri(dataUri, Intent.URI_INTENT_SCHEME);
+            sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            // try to find activity that can handle the chrome intent
+            ResolveInfo info = packageManager.resolveActivity(sendIntent, 0);
 
-			// if activity is found, meaning not null
-			if (info != null) {
-				this.reactContext.startActivity(sendIntent);
-				promise.resolve(true);
-				return;
-			}
-			// if activity not found, load fallback URL from chrome intent
-			String fallbackUrl = sendIntent.getStringExtra("browser_fallback_url");
-			if(fallbackUrl != null) {
-				Intent fallbackUrlIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(fallbackUrl));
-				this.reactContext.startActivity(fallbackUrlIntent);
-				promise.resolve(true);
-				return;
-			}
+            // if activity is found, meaning not null
+            if (info != null) {
+                this.reactContext.startActivity(sendIntent);
+                promise.resolve(true);
+                return;
+            }
+            // if activity not found, load fallback URL from chrome intent
+            String fallbackUrl = sendIntent.getStringExtra("browser_fallback_url");
+            if(fallbackUrl != null) {
+                Intent fallbackUrlIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(fallbackUrl));
+                this.reactContext.startActivity(fallbackUrlIntent);
+                promise.resolve(true);
+                return;
+            }
 
-			promise.resolve(false);
-		} catch (Exception e) {
-			e.printStackTrace();
-			promise.resolve(false);
-		}
-	}
+            promise.resolve(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            promise.resolve(false);
+        }
+    }
 
     @ReactMethod
     public void openMaps(String query) {
