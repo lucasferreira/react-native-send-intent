@@ -89,9 +89,12 @@ var SendIntentAndroid = {
         return RNSendIntentAndroid.openAppWithData(packageName, dataUri, mimeType, extras || {});
 	},
 	/**
-	 * following the chrome intent syntax: https://developer.chrome.com/multidevice/android/intents
-	 * open intent with the package name that is defined in the dataUri field
-	 * else open the browser_fallback_url field in the mobile's browser
+	 * This method follows the chrome intent syntax: https://developer.chrome.com/multidevice/android/intents.
+	 *
+	 * Opens intent with package name defined in the dataUri field.
+	 * When intent cannot be resolved, open the URL in browser_fallback_url in the mobile's browser.
+	 * @param {string} dataUri - the intent url. Looks like: `intent://www.spm.com/qrlogin#Intent;scheme=https;package=example.package;S.browser_fallback_url=https://www.spm.com/download;end`.
+	 * @returns {Promise<boolean>} true if app or fallback URL is opened, false otherwise.
 	 */
 	openChromeIntent(dataUri) {
         return RNSendIntentAndroid.openChromeIntent(dataUri);
