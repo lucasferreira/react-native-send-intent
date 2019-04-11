@@ -693,6 +693,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
             if (!pm.isIgnoringBatteryOptimizations(this.reactContext.getPackageName())) {
                 Intent sendIntent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
                 sendIntent.setData(Uri.fromParts("package", this.reactContext.getPackageName(), null));
+                sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
                     this.reactContext.startActivity(sendIntent);
@@ -710,6 +711,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     public void showIgnoreBatteryOptimizationsSettings() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Intent sendIntent = new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+            sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
                 this.reactContext.startActivity(sendIntent);
