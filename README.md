@@ -363,6 +363,17 @@ Opens Android chooser so the user can select which app will handle the file
     }, 'Open file with:')
 ```
 
+## Example / Open File Picker
+
+Opens Android own file selector to get the selected file and callback path from Uri
+
+```javascript
+    SendIntentAndroid.openFilePicker({
+        type: 'file_mimetype', //default is "*/*"
+        title: 'selector title', //default is "Choose File"
+    }, (filePath)=>{})
+```
+
 ## Example / Get phone number
 Please add this lines to your AndroidManifest.xml file before using next example:
 
