@@ -1,6 +1,7 @@
 package com.burnweb.rnsendintent;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.content.ComponentName;
 import android.provider.CalendarContract;
@@ -92,6 +93,15 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     public void getPhoneNumber(final Promise promise) {
       TelephonyManager tm =(TelephonyManager)this.reactContext.getSystemService(Context.TELEPHONY_SERVICE);
       promise.resolve(tm.getLine1Number());
+    }
+
+    @ReactMethod
+    public void openDownloadManager() {
+      Intent sendIntent = new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS);
+        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+        this.reactContext.startActivity(sendIntent);
+      }
     }
 
     private Intent getSendIntent(String text, String type) {

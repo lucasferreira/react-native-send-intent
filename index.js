@@ -96,6 +96,9 @@ var SendIntentAndroid = {
     },
     openEmailApp() {
         RNSendIntentAndroid.openEmailApp();
+    },
+    openDownloadManager() {
+        RNSendIntentAndroid.openDownloadManager();
     }
 };
 

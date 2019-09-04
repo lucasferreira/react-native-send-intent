@@ -202,6 +202,12 @@ SendIntentAndroid.openCamera();
 SendIntentAndroid.openEmailApp();
 ```
 
+## Example / Open Download Manager
+
+```javascript
+SendIntentAndroid.openDownloadManager();
+```
+
 ## Example / Open Share With dialog
 
 Opens Androids default share tray:
