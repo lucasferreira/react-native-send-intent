@@ -17,6 +17,7 @@ export function shareImageToInstagram(type, mediaPath)
 export function openSettings(settingsName)
 export function getVoiceMailNumber()
 export function getPhoneNumber()
+export function gotoHomeScreen()
 export function openApp(packageName: string, extras: { [index: string]: string })
 export function openAppWithData(packageName: string, dataUri: string, mimeType?: string, extras?: { [index: string]: string }): Promise<boolean>
 export function openChromeIntent(dataUri: string): Promise<boolean>

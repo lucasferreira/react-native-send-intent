@@ -749,6 +749,15 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
       }
     }
 
+    @ReactMethod
+    public void gotoHomeScreen() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        this.reactContext.startActivity(intent);
+    }
+
     private final ActivityEventListener mActivityEventListener = new BaseActivityEventListener() {
       @Override
       public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {

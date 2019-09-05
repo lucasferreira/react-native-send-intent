@@ -77,6 +77,9 @@ var SendIntentAndroid = {
     getPhoneNumber() {
         return RNSendIntentAndroid.getPhoneNumber();
     },
+    gotoHomeScreen() {
+        return RNSendIntentAndroid.gotoHomeScreen();
+    },
     openApp(packageName, extras) {
         return RNSendIntentAndroid.openApp(packageName, extras || {});
     },
