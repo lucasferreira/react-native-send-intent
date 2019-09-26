@@ -443,8 +443,13 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
           try (final ResponseBody body = response.body()) {
             saveFile(body);
 
+            Uri uri = Uri.fromFile(file);
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+              uri = FileProvider.getUriForFile(reactContext, reactContext.getPackageName() + ".fileprovider", file);
+            }
+
             final Intent intent = new Intent(Intent.ACTION_VIEW)
-                                  .setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+                                  .setDataAndType(uri, "application/vnd.android.package-archive");
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
             reactContext.startActivity(intent);
