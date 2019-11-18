@@ -509,7 +509,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         }
 
         if (options.hasKey("imageUrl")) {
-            File fileUrl = options.getString("imageUrl");
+            File fileUrl = new File(options.getString("imageUrl"));
             Uri uri = FileProvider.getUriForFile(this.reactContext, this.reactContext.getPackageName() + ".fileprovider", fileUrl);
             intent.putExtra(Intent.EXTRA_STREAM, uri);
             intent.setType("image/*");
@@ -553,7 +553,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
             }
 
             if (options.hasKey("imageUrl")) {
-                File fileUrl = options.getString("imageUrl");
+                File fileUrl = new File(options.getString("imageUrl"));
                 Uri uri = FileProvider.getUriForFile(this.reactContext, this.reactContext.getPackageName() + ".fileprovider", fileUrl);
                 name = Intent.EXTRA_STREAM;
                 values.add(uri);
