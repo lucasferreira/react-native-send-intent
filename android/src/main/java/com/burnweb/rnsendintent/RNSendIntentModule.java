@@ -13,11 +13,13 @@ import android.os.PowerManager;
 import android.util.Log;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.content.FileProvider;
+import androidx.core.content.FileProvider;
 import android.telephony.TelephonyManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.os.Parcelable;
+
 
 import java.util.Map;
 import java.util.HashMap;
@@ -30,6 +32,7 @@ import java.text.ParseException;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.BaseActivityEventListener;
@@ -732,6 +735,46 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         if (currentActivity != null) {
             currentActivity.startActivity(Intent.createChooser(intent, title));
         }
+    }
+
+    @ReactMethod
+    public void openEmailApp() {
+      Intent sendIntent = new Intent(Intent.ACTION_MAIN);
+      sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      sendIntent.addCategory(Intent.CATEGORY_APP_EMAIL);
+      if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+          this.reactContext.startActivity(sendIntent);
+      }
+    }
+
+    @ReactMethod
+    public void openAllEmailApp() {
+
+        List<Intent> emailAppLauncherIntents = new ArrayList<>();
+
+        //Intent that only email apps can handle:
+        Intent emailAppIntent = new Intent(Intent.ACTION_SENDTO);
+        emailAppIntent.setData(Uri.parse("mailto:"));
+        emailAppIntent.putExtra(Intent.EXTRA_EMAIL, "");
+        emailAppIntent.putExtra(Intent.EXTRA_SUBJECT, "");
+
+        PackageManager packageManager = this.reactContext.getPackageManager();
+
+        //All installed apps that can handle email intent:
+        List<ResolveInfo> emailApps = packageManager.queryIntentActivities(emailAppIntent, PackageManager.MATCH_DEFAULT_ONLY);
+
+        for (ResolveInfo resolveInfo : emailApps) {
+            String packageName = resolveInfo.activityInfo.packageName;
+            Intent launchIntent = packageManager.getLaunchIntentForPackage(packageName);
+            emailAppLauncherIntents.add(launchIntent);
+        }
+
+        //Create chooser
+        Intent chooserIntent = Intent.createChooser(new Intent(), "Select your Inbox");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, emailAppLauncherIntents.toArray(new Parcelable[emailAppLauncherIntents.size()]));
+
+        Activity currentActivity = getCurrentActivity();
+        currentActivity.startActivity(chooserIntent);
     }
 
     @ReactMethod

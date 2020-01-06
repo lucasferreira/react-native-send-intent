@@ -69,6 +69,7 @@ declare namespace SendIntentAndroid {
   const openDownloadManager: () => void
   const openFileChooser: (options: FileChooserOptions, title: string) => void
   const openEmailApp: () => void
+  const openAllEmailApp: () => void
   const TEXT_PLAIN: unique symbol
   const TEXT_HTML: unique symbol
 }

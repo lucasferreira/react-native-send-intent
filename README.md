@@ -214,8 +214,16 @@ SendIntentAndroid.openCamera();
 
 ## Example / Open Email Application
 
+Will open default Email application
+
 ```javascript
 SendIntentAndroid.openEmailApp();
+```
+
+Will open all the Email app's that available in device
+
+```javascript
+SendIntentAndroid.openAllEmailApp();
 ```
 
 ## Example / Open Download Manager

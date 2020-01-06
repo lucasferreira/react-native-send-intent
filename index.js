@@ -111,6 +111,9 @@ var SendIntentAndroid = {
     openEmailApp() {
         RNSendIntentAndroid.openEmailApp();
     },
+    openAllEmailApp() {
+        RNSendIntentAndroid.openAllEmailApp();
+    },
     openDownloadManager() {
         RNSendIntentAndroid.openDownloadManager();
     },
