@@ -15,8 +15,8 @@ android {
     defaultConfig {
         minSdkVersion _minSdkVersion
         targetSdkVersion _targetSdkVersion
-        versionCode 22
-        versionName "1.0.32"
+        versionCode 23
+        versionName "1.1.0"
     }
 }
 

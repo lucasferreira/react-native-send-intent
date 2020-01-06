@@ -735,6 +735,20 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void openFilePicker(ReadableMap options,Callback callback) {
+      mCallback = callback;
+      Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+      intent.setType(options.getString("type"));
+      intent.addCategory(Intent.CATEGORY_OPENABLE);
+      try {
+          Activity currentActivity = getCurrentActivity();
+          currentActivity.startActivityForResult(Intent.createChooser(intent, options.getString("title")),FILE_SELECT_CODE);
+      } catch (android.content.ActivityNotFoundException ex) {
+
+      }
+    }
+
+    @ReactMethod
     public void openEmailApp() {
       Intent sendIntent = new Intent(Intent.ACTION_MAIN);
       sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -756,7 +770,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
                 if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
                     this.reactContext.startActivity(sendIntent);
-                    
+
                     promise.resolve(true);
                     return;
                 }
@@ -776,20 +790,6 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
                 this.reactContext.startActivity(sendIntent);
             }
         }
-    }
-
-    @ReactMethod
-    public void openFilePicker(ReadableMap options,Callback callback) {
-      mCallback = callback;
-      Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-      intent.setType(options.getString("type"));
-      intent.addCategory(Intent.CATEGORY_OPENABLE);
-      try {
-          Activity currentActivity = getCurrentActivity();
-          currentActivity.startActivityForResult(Intent.createChooser(intent, options.getString("title")),FILE_SELECT_CODE);
-      } catch (android.content.ActivityNotFoundException ex) {
-
-      }
     }
 
     private final ActivityEventListener mActivityEventListener = new BaseActivityEventListener() {
