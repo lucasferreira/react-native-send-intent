@@ -1,8 +1,9 @@
 {
   "name": "react-native-send-intent",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "description": "React Native Android module to use Android's Intent actions for send sms, text to shareable apps, open custom apps, make phone calls and etc",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

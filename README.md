@@ -184,6 +184,22 @@ SendIntentAndroid.openAppWithData("com.mxtech.videoplayer.ad",
 ).then((wasOpened) => {});
 ```
 
+## Example / Open Chrome Intent
+
+Opens Chrome intent as defined in https://developer.chrome.com/multidevice/android/intents
+
+Returns a promise with a boolean.
+
+True if: the intent was handled by an activity or the browser opened the `browser_fallback_url`
+
+False if both conditions are not fulfilled
+
+```javascript
+SendIntentAndroid.openChromeIntent("intent://www.spm.com/qrlogin#Intent;scheme=https;package=example.package;S.browser_fallback_url=https://www.spm.com/download;end",
+  }
+).then((wasOpened) => {});
+```
+
 ## Example / Open Calendar
 
 ```javascript
@@ -200,6 +216,12 @@ SendIntentAndroid.openCamera();
 
 ```javascript
 SendIntentAndroid.openEmailApp();
+```
+
+## Example / Open Download Manager
+
+```javascript
+SendIntentAndroid.openDownloadManager();
 ```
 
 ## Example / Open Share With dialog
@@ -359,8 +381,19 @@ Opens Android chooser so the user can select which app will handle the file.
     SendIntentAndroid.openFileChooser({
         subject: 'File subject', //optional,
         fileUrl: '/path_or_url/to/file',
-        type: 'file_mimetype' 
+        type: 'file_mimetype'
     }, 'Open file with:')
+```
+
+## Example / Open File Picker
+
+Opens Android own file selector to get the selected file and callback path from Uri
+
+```javascript
+    SendIntentAndroid.openFilePicker({
+        type: 'file_mimetype', //default is "*/*"
+        title: 'selector title', //default is "Choose File"
+    }, (filePath)=>{})
 ```
 
 ## Example / Get phone number

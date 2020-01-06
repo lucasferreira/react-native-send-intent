@@ -1,6 +1,7 @@
 package com.burnweb.rnsendintent;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.content.ComponentName;
 import android.provider.CalendarContract;
@@ -15,6 +16,8 @@ import android.os.Build;
 import android.support.v4.content.FileProvider;
 import android.telephony.TelephonyManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -28,6 +31,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
+import com.facebook.react.bridge.ActivityEventListener;
+import com.facebook.react.bridge.BaseActivityEventListener;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.Promise;
@@ -52,6 +57,7 @@ import okio.BufferedSource;
 
 public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
+    private static final int FILE_SELECT_CODE = 20190903;
     private static final String TAG = RNSendIntentModule.class.getSimpleName();
 
     private static final String TEXT_PLAIN = "text/plain";
@@ -60,10 +66,12 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
 
     private ReactApplicationContext reactContext;
+    private Callback mCallback;
 
     public RNSendIntentModule(ReactApplicationContext reactContext) {
       super(reactContext);
       this.reactContext = reactContext;
+      this.reactContext.addActivityEventListener(mActivityEventListener);
     }
 
     @Override
@@ -91,6 +99,15 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
       promise.resolve(tm.getLine1Number());
     }
 
+    @ReactMethod
+    public void openDownloadManager() {
+      Intent sendIntent = new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS);
+        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+        this.reactContext.startActivity(sendIntent);
+      }
+    }
+
     private Intent getSendIntent(String text, String type) {
       Intent sendIntent = new Intent();
       sendIntent.setAction(Intent.ACTION_SEND);
@@ -107,7 +124,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         while(it.hasNextKey()) {
             String key = it.nextKey();
             ReadableType type = extras.getType(key);
-            
+
             switch (type) {
                 case Boolean:
                     intent.putExtra(key, extras.getBoolean(key));
@@ -428,8 +445,13 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
           try (final ResponseBody body = response.body()) {
             saveFile(body);
 
+            Uri uri = Uri.fromFile(file);
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+              uri = FileProvider.getUriForFile(reactContext, reactContext.getPackageName() + ".fileprovider", file);
+            }
+
             final Intent intent = new Intent(Intent.ACTION_VIEW)
-                                  .setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+                                  .setDataAndType(uri, "application/vnd.android.package-archive");
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
             reactContext.startActivity(intent);
@@ -489,12 +511,13 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         }
 
         if (options.hasKey("imageUrl")) {
-            Uri uri = Uri.parse(options.getString("imageUrl"));
+            File fileUrl = new File(options.getString("imageUrl"));
+            Uri uri = FileProvider.getUriForFile(this.reactContext, this.reactContext.getPackageName() + ".fileprovider", fileUrl);
             intent.putExtra(Intent.EXTRA_STREAM, uri);
             intent.setType("image/*");
         } else if (options.hasKey("videoUrl")) {
             File media = new File(options.getString("videoUrl"));
-            Uri uri = Uri.fromFile(media);
+            Uri uri = FileProvider.getUriForFile(this.reactContext, this.reactContext.getPackageName() + ".fileprovider", media);
             if(!options.hasKey("subject")) {
               intent.putExtra(Intent.EXTRA_SUBJECT,"Untitled_Video");
             }
@@ -517,7 +540,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
         ArrayList<Object> readable = option.toArrayList();
         Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
- 
+
           String name = Intent.EXTRA_TEXT;
           ArrayList<Object> values = new ArrayList<>();
 
@@ -532,13 +555,14 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
             }
 
             if (options.hasKey("imageUrl")) {
-                Uri uri = Uri.parse(options.getString("imageUrl"));
+                File fileUrl = new File(options.getString("imageUrl"));
+                Uri uri = FileProvider.getUriForFile(this.reactContext, this.reactContext.getPackageName() + ".fileprovider", fileUrl);
                 name = Intent.EXTRA_STREAM;
                 values.add(uri);
                 intent.setType("image/*");
             } else if (options.hasKey("videoUrl")) {
                 File media = new File(options.getString("videoUrl"));
-                Uri uri = Uri.fromFile(media);
+                Uri uri = FileProvider.getUriForFile(this.reactContext, this.reactContext.getPackageName() + ".fileprovider", media);
                 if(!options.hasKey("subject")) {
                   intent.putExtra(Intent.EXTRA_SUBJECT,"Untitled_Video");
                 }
@@ -567,9 +591,9 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
             sendIntent.setDataAndType(uri, mimeType);
         else
             sendIntent.setData(uri);
-        
+
         sendIntent.setPackage(packageName);
-        
+
         if (!parseExtras(extras, sendIntent)) {
             promise.resolve(false);
             return;
@@ -579,6 +603,40 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.reactContext.startActivity(sendIntent);
         promise.resolve(true);
+    }
+
+    @ReactMethod
+    public void openChromeIntent(String dataUri, final Promise promise) {
+        // following intent syntax of: https://developer.chrome.com/multidevice/android/intents
+        Intent sendIntent;
+        PackageManager packageManager = this.reactContext.getPackageManager();
+
+        try {
+            sendIntent = Intent.parseUri(dataUri, Intent.URI_INTENT_SCHEME);
+            sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            // try to find activity that can handle the chrome intent
+            ResolveInfo info = packageManager.resolveActivity(sendIntent, 0);
+
+            // if activity is found, meaning not null
+            if (info != null) {
+                this.reactContext.startActivity(sendIntent);
+                promise.resolve(true);
+                return;
+            }
+            // if activity not found, load fallback URL from chrome intent
+            String fallbackUrl = sendIntent.getStringExtra("browser_fallback_url");
+            if(fallbackUrl != null) {
+                Intent fallbackUrlIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(fallbackUrl));
+                this.reactContext.startActivity(fallbackUrlIntent);
+                promise.resolve(true);
+                return;
+            }
+
+            promise.resolve(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            promise.resolve(false);
+        }
     }
 
     @ReactMethod
@@ -679,6 +737,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void openEmailApp() {
       Intent sendIntent = new Intent(Intent.ACTION_MAIN);
+      sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       sendIntent.addCategory(Intent.CATEGORY_APP_EMAIL);
       if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
           this.reactContext.startActivity(sendIntent);
@@ -718,4 +777,29 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
             }
         }
     }
+
+    @ReactMethod
+    public void openFilePicker(ReadableMap options,Callback callback) {
+      mCallback = callback;
+      Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+      intent.setType(options.getString("type"));
+      intent.addCategory(Intent.CATEGORY_OPENABLE);
+      try {
+          Activity currentActivity = getCurrentActivity();
+          currentActivity.startActivityForResult(Intent.createChooser(intent, options.getString("title")),FILE_SELECT_CODE);
+      } catch (android.content.ActivityNotFoundException ex) {
+
+      }
+    }
+
+    private final ActivityEventListener mActivityEventListener = new BaseActivityEventListener() {
+      @Override
+      public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+          if (requestCode == FILE_SELECT_CODE && data!=null) {
+              Uri uri = data.getData();
+              mCallback.invoke(uri.getPath());
+          }
+      }
+    };
+
 }
