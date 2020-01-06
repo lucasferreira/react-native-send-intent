@@ -98,7 +98,7 @@ SendIntentAndroid.sendSms('+55 48 9999-9999', 'SMS body text here');
 It's very important ask for permission in your AndroidManifest.xml file if you need to use Phone Calls directly.
 You can add an optional second parameter, to fix the default phone app.
 
-Please add this line to your XML before using this example:
+Please add this line to your AndroidManifest.xml before using this example:
 
 ```xml
 <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -144,7 +144,7 @@ SendIntentAndroid.addCalendarEvent({
 
 ## Example / Check if an application is installed
 
-Check if Gmail app is intalled. Returns a promise with a boolean telling if the app is installed or not
+Check if Gmail app is intalled. Returns a promise with a boolean telling if the app is installed or not.
 
 ```javascript
 SendIntentAndroid.isAppInstalled('com.google.android.gm').then((isInstalled) => {});
@@ -309,7 +309,7 @@ mode: d,w,b
     });
 ```
 
-when you call SendIntentAndroid.shareTextToLine this method, app will bring txt message to LINE, and you can select one or multiple friends to share.
+When you call SendIntentAndroid.shareTextToLine this method, app will bring txt message to LINE, and you can select one or multiple friends to share.
 
 
 ## Example / Share Image to Instagram
@@ -375,7 +375,7 @@ Please add this line to your AndroidManifest.xml file before using next example:
 
 ## Example / Open File Chooser
 
-Opens Android chooser so the user can select which app will handle the file
+Opens Android chooser so the user can select which app will handle the file.
 
 ```javascript
     SendIntentAndroid.openFileChooser({
@@ -397,7 +397,7 @@ Opens Android own file selector to get the selected file and callback path from 
 ```
 
 ## Example / Get phone number
-Please add this lines to your AndroidManifest.xml file before using next example:
+Please add these lines to your AndroidManifest.xml file before using next example:
 
 ```xml
   <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -413,6 +413,28 @@ Please add this lines to your AndroidManifest.xml file before using next example
     //do something with number
   });
 ```
+
+## Example / Request 'ignore battery optimizations'
+Please add this line to your AndroidManifest.xml file before using next example:
+
+```xml
+  <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+```
+
+Prompts the user to add your app to the Doze and App Standby optimizations exception white-list. Returns true if running on Android version M and greater, if the app is not on the white-list, and the intent was successfully shown. Will only show on Android version M and greater. For more details [look here](https://developer.android.com/training/monitoring-device-state/doze-standby#support_for_other_use_cases).
+
+```javascript
+  SendIntentAndroid.requestIgnoreBatteryOptimizations().then((intentShown) => {});
+```
+
+## Example / Show battery optimizations settings
+
+Will only show on Android version M and greater. For more details [look here](https://developer.android.com/training/monitoring-device-state/doze-standby#support_for_other_use_cases).
+
+```javascript
+  SendIntentAndroid.showIgnoreBatteryOptimizationsSettings();
+```
+
 
 ## License
 MIT

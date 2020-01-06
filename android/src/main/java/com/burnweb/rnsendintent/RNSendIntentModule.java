@@ -7,7 +7,9 @@ import android.content.ComponentName;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Calendars;
 import android.provider.CalendarContract.Events;
+import android.provider.Settings;
 import android.os.Environment;
+import android.os.PowerManager;
 import android.util.Log;
 import android.net.Uri;
 import android.os.Build;
@@ -443,8 +445,13 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
           try (final ResponseBody body = response.body()) {
             saveFile(body);
 
+            Uri uri = Uri.fromFile(file);
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+              uri = FileProvider.getUriForFile(reactContext, reactContext.getPackageName() + ".fileprovider", file);
+            }
+
             final Intent intent = new Intent(Intent.ACTION_VIEW)
-                                  .setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+                                  .setDataAndType(uri, "application/vnd.android.package-archive");
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
             reactContext.startActivity(intent);
@@ -504,12 +511,13 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         }
 
         if (options.hasKey("imageUrl")) {
-            Uri uri = Uri.parse(options.getString("imageUrl"));
+            File fileUrl = new File(options.getString("imageUrl"));
+            Uri uri = FileProvider.getUriForFile(this.reactContext, this.reactContext.getPackageName() + ".fileprovider", fileUrl);
             intent.putExtra(Intent.EXTRA_STREAM, uri);
             intent.setType("image/*");
         } else if (options.hasKey("videoUrl")) {
             File media = new File(options.getString("videoUrl"));
-            Uri uri = Uri.fromFile(media);
+            Uri uri = FileProvider.getUriForFile(this.reactContext, this.reactContext.getPackageName() + ".fileprovider", media);
             if(!options.hasKey("subject")) {
               intent.putExtra(Intent.EXTRA_SUBJECT,"Untitled_Video");
             }
@@ -547,13 +555,14 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
             }
 
             if (options.hasKey("imageUrl")) {
-                Uri uri = Uri.parse(options.getString("imageUrl"));
+                File fileUrl = new File(options.getString("imageUrl"));
+                Uri uri = FileProvider.getUriForFile(this.reactContext, this.reactContext.getPackageName() + ".fileprovider", fileUrl);
                 name = Intent.EXTRA_STREAM;
                 values.add(uri);
                 intent.setType("image/*");
             } else if (options.hasKey("videoUrl")) {
                 File media = new File(options.getString("videoUrl"));
-                Uri uri = Uri.fromFile(media);
+                Uri uri = FileProvider.getUriForFile(this.reactContext, this.reactContext.getPackageName() + ".fileprovider", media);
                 if(!options.hasKey("subject")) {
                   intent.putExtra(Intent.EXTRA_SUBJECT,"Untitled_Video");
                 }
@@ -726,16 +735,6 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void openEmailApp() {
-      Intent sendIntent = new Intent(Intent.ACTION_MAIN);
-      sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-      sendIntent.addCategory(Intent.CATEGORY_APP_EMAIL);
-      if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
-          this.reactContext.startActivity(sendIntent);
-      }
-    }
-
-    @ReactMethod
     public void openFilePicker(ReadableMap options,Callback callback) {
       mCallback = callback;
       Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -757,6 +756,50 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
         this.reactContext.startActivity(intent);
     }
+  
+    @ReactMethod
+    public void openEmailApp() {
+      Intent sendIntent = new Intent(Intent.ACTION_MAIN);
+      sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      sendIntent.addCategory(Intent.CATEGORY_APP_EMAIL);
+      if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+          this.reactContext.startActivity(sendIntent);
+      }
+    }
+
+    @ReactMethod
+    public void requestIgnoreBatteryOptimizations(final Promise promise) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PowerManager pm = (PowerManager) this.reactContext.getSystemService(Context.POWER_SERVICE);
+
+            if (!pm.isIgnoringBatteryOptimizations(this.reactContext.getPackageName())) {
+                Intent sendIntent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                sendIntent.setData(Uri.fromParts("package", this.reactContext.getPackageName(), null));
+                sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+                    this.reactContext.startActivity(sendIntent);
+
+                    promise.resolve(true);
+                    return;
+                }
+            }
+        }
+
+        promise.resolve(false);
+    }
+
+    @ReactMethod
+    public void showIgnoreBatteryOptimizationsSettings() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Intent sendIntent = new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+            sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+                this.reactContext.startActivity(sendIntent);
+            }
+        }
+    }
 
     private final ActivityEventListener mActivityEventListener = new BaseActivityEventListener() {
       @Override
@@ -767,4 +810,5 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
           }
       }
     };
+
 }
