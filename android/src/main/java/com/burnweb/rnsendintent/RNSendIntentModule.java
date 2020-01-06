@@ -749,6 +749,15 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void gotoHomeScreen() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        this.reactContext.startActivity(intent);
+    }
+  
+    @ReactMethod
     public void openEmailApp() {
       Intent sendIntent = new Intent(Intent.ACTION_MAIN);
       sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
