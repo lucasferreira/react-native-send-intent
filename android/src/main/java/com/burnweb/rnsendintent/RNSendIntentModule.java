@@ -509,12 +509,13 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         }
 
         if (options.hasKey("imageUrl")) {
-            Uri uri = Uri.parse(options.getString("imageUrl"));
+            File fileUrl = new File(options.getString("imageUrl"));
+            Uri uri = FileProvider.getUriForFile(this.reactContext, this.reactContext.getPackageName() + ".fileprovider", fileUrl);
             intent.putExtra(Intent.EXTRA_STREAM, uri);
             intent.setType("image/*");
         } else if (options.hasKey("videoUrl")) {
             File media = new File(options.getString("videoUrl"));
-            Uri uri = Uri.fromFile(media);
+            Uri uri = FileProvider.getUriForFile(this.reactContext, this.reactContext.getPackageName() + ".fileprovider", media);
             if(!options.hasKey("subject")) {
               intent.putExtra(Intent.EXTRA_SUBJECT,"Untitled_Video");
             }
@@ -552,13 +553,14 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
             }
 
             if (options.hasKey("imageUrl")) {
-                Uri uri = Uri.parse(options.getString("imageUrl"));
+                File fileUrl = new File(options.getString("imageUrl"));
+                Uri uri = FileProvider.getUriForFile(this.reactContext, this.reactContext.getPackageName() + ".fileprovider", fileUrl);
                 name = Intent.EXTRA_STREAM;
                 values.add(uri);
                 intent.setType("image/*");
             } else if (options.hasKey("videoUrl")) {
                 File media = new File(options.getString("videoUrl"));
-                Uri uri = Uri.fromFile(media);
+                Uri uri = FileProvider.getUriForFile(this.reactContext, this.reactContext.getPackageName() + ".fileprovider", media);
                 if(!options.hasKey("subject")) {
                   intent.putExtra(Intent.EXTRA_SUBJECT,"Untitled_Video");
                 }
