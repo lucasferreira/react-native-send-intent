@@ -7,7 +7,9 @@ import android.content.ComponentName;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Calendars;
 import android.provider.CalendarContract.Events;
+import android.provider.Settings;
 import android.os.Environment;
+import android.os.PowerManager;
 import android.util.Log;
 import android.net.Uri;
 import android.os.Build;
@@ -743,6 +745,40 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void requestIgnoreBatteryOptimizations(final Promise promise) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PowerManager pm = (PowerManager) this.reactContext.getSystemService(Context.POWER_SERVICE);
+
+            if (!pm.isIgnoringBatteryOptimizations(this.reactContext.getPackageName())) {
+                Intent sendIntent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                sendIntent.setData(Uri.fromParts("package", this.reactContext.getPackageName(), null));
+                sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+                    this.reactContext.startActivity(sendIntent);
+                    
+                    promise.resolve(true);
+                    return;
+                }
+            }
+        }
+
+        promise.resolve(false);
+    }
+
+    @ReactMethod
+    public void showIgnoreBatteryOptimizationsSettings() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Intent sendIntent = new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+            sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+                this.reactContext.startActivity(sendIntent);
+            }
+        }
+    }
+
+    @ReactMethod
     public void openFilePicker(ReadableMap options,Callback callback) {
       mCallback = callback;
       Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -765,4 +801,5 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
           }
       }
     };
+
 }
