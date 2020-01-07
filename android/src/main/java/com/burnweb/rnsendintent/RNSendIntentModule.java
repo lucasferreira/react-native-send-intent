@@ -2,37 +2,36 @@ package com.burnweb.rnsendintent;
 
 import android.app.Activity;
 import android.app.DownloadManager;
-import android.content.Intent;
 import android.content.ComponentName;
-import android.provider.CalendarContract;
-import android.provider.CalendarContract.Calendars;
-import android.provider.CalendarContract.Events;
-import android.provider.Settings;
-import android.os.Environment;
-import android.os.PowerManager;
-import android.util.Log;
-import android.net.Uri;
-import android.os.Build;
-import androidx.core.content.FileProvider;
-import android.telephony.TelephonyManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.os.Parcelable;
+import android.os.PowerManager;
+import android.provider.CalendarContract.Calendars;
+import android.provider.CalendarContract.Events;
+import android.provider.CalendarContract;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
+import android.util.Log;
+import androidx.core.content.FileProvider;
 
-
-import java.util.Map;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Arrays;
-import java.lang.SecurityException;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
 import java.io.File;
-import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.lang.SecurityException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.BaseActivityEventListener;
@@ -43,20 +42,20 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableArray;
-import com.facebook.react.bridge.ReadableType;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
+import com.facebook.react.bridge.ReadableType;
 
-import okhttp3.OkHttpClient;
 import okhttp3.Call;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-import okio.Okio;
 import okio.BufferedSink;
 import okio.BufferedSource;
+import okio.Okio;
 
 public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
@@ -799,7 +798,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
         this.reactContext.startActivity(intent);
     }
-  
+
     @ReactMethod
     public void openEmailApp() {
       Intent sendIntent = new Intent(Intent.ACTION_MAIN);
