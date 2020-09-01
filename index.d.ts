@@ -43,6 +43,12 @@ declare namespace SendIntentAndroid {
       type: string
   }
 
+  interface FilePickerOptions {
+      type?: string
+      title?: string
+      multiple?: boolean
+  }
+
   const sendText: (config: TextIntentConfig) => void
   const sendPhoneCall: (phoneNumber: string, phoneAppOnly?: boolean) => void
   const sendPhoneDial: (phoneNumber: string, phoneAppOnly?: boolean) => void
@@ -68,6 +74,7 @@ declare namespace SendIntentAndroid {
   const openChromeIntent: (dataUri: string) => Promise<boolean>
   const openDownloadManager: () => void
   const openFileChooser: (options: FileChooserOptions, title: string) => void
+  const openFilePicker: (options: FilePickerOptions, callback: void) => void
   const openEmailApp: () => void
   const openAllEmailApp: () => void
   const TEXT_PLAIN: unique symbol

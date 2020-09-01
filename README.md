@@ -406,15 +406,24 @@ SendIntentAndroid.openFileChooser(
 
 ## Example / Open File Picker
 
-Opens Android own file selector to get the selected file and callback path from Uri
+Please add these lines to your AndroidManifest.xml file before using next example:
+
+```xml
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+```
+
+
+Opens Android own file selector to get the selected file and callback path from Uri.
+Allow multiple selection and don't forget check permission before using.
 
 ```javascript
 SendIntentAndroid.openFilePicker(
   {
-    type: "file_mimetype", //default is "*/*"
-    title: "selector title", //default is "Choose File"
+    type: "file_mimetype", //optional, default is "*/*"
+    title: "selector title", //optional, default is " "
+    multiple: true, //optional, default is false
   },
-  filePath => {}
+  stringArr => {} //return filePaths string and need parse to array (minimum length = 1)
 );
 ```
 

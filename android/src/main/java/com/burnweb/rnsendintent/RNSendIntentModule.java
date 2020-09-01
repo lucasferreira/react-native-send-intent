@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.burnweb.rnsendintent.utils.RealPathUtil;
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.BaseActivityEventListener;
 import com.facebook.react.bridge.Callback;
@@ -59,7 +60,7 @@ import okio.Okio;
 
 public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
-    private static final int FILE_SELECT_CODE = 20190903;
+    private static final int FILE_SELECT_CODE = 0;
     private static final String TAG = RNSendIntentModule.class.getSimpleName();
 
     private static final String TEXT_PLAIN = "text/plain";
@@ -778,13 +779,16 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void openFilePicker(ReadableMap options,Callback callback) {
+      //Needs permission "android.permission.READ_EXTERNAL_STORAGE"
       mCallback = callback;
       Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-      intent.setType(options.getString("type"));
+
+      intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, options.hasKey("multiple") && options.getBoolean("multiple"));
+      intent.setType(options.hasKey("type") ? options.getString("type") : "*/*");
       intent.addCategory(Intent.CATEGORY_OPENABLE);
       try {
           Activity currentActivity = getCurrentActivity();
-          currentActivity.startActivityForResult(Intent.createChooser(intent, options.getString("title")),FILE_SELECT_CODE);
+          currentActivity.startActivityForResult(Intent.createChooser(intent, options.hasKey("title") ? options.getString("title") : ""),FILE_SELECT_CODE);
       } catch (android.content.ActivityNotFoundException ex) {
 
       }
@@ -837,8 +841,24 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
       @Override
       public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
           if (requestCode == FILE_SELECT_CODE && data!=null) {
-              Uri uri = data.getData();
-              mCallback.invoke(uri.getPath());
+              if(data.getData() != null){ // Single file picker
+
+                  String res = RealPathUtil.getRealPath(reactContext, data.getData());
+                  res = res != null ? "\""+res+"\"" : null;
+                  mCallback.invoke("["+res+"]"); // min length = 1
+
+              } else if(data.getClipData() != null){ // Multiple files picker
+
+                  int len = data.getClipData().getItemCount();
+                  String[] result = new String[len];
+                  for(int i = 0; i < len; i++) {
+                      Uri uri = data.getClipData().getItemAt(i).getUri();
+                      String res = RealPathUtil.getRealPath(reactContext, uri);
+                      result[i] = res != null ? "\""+res+"\"" : null;
+                  }
+
+                  mCallback.invoke(Arrays.toString(result));
+              }
           }
       }
     };
