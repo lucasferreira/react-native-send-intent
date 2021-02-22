@@ -5,6 +5,7 @@ React Native Android module to use Android's Intent actions for send text to sha
 [![npm version](http://img.shields.io/npm/v/react-native-send-intent.svg?style=flat-square)](https://npmjs.org/package/react-native-send-intent "View this project on npm")
 [![npm downloads](http://img.shields.io/npm/dm/react-native-send-intent.svg?style=flat-square)](https://npmjs.org/package/react-native-send-intent "View this project on npm")
 [![npm licence](http://img.shields.io/npm/l/react-native-send-intent.svg?style=flat-square)](https://npmjs.org/package/react-native-send-intent "View this project on npm")
+[![donate](https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat-square)](https://www.paypal.com/donate?business=ZMAJTXD5HYWCQ&item_name=open-source+dev+react+native&currency_code=USD "If this project help you reduce time to develop, you can give me a cup of coffee ;)")
 
 This module is useful when you need to share some text between apps in Android device and if you have a valid phone number make some call directly (if you ask for permission in AndroidManifest.xml).
 
@@ -323,7 +324,7 @@ SendIntentAndroid.openMapsWithRoute("Piccadilly Circus Station, London, United K
 ## Example / Share text to line
 
 ```javascript
-SendIntentAndroid.isAppInstalled("jp.naver.line.android").then(function(isInstalled) {
+SendIntentAndroid.isAppInstalled("jp.naver.line.android").then(function (isInstalled) {
   if (!isInstalled) {
     //LINE has not install, you need to install it!
     return;
@@ -342,10 +343,10 @@ import { CameraRoll } from "react-native";
 
 //get frist image from CameraRoll
 CameraRoll.getPhotos({ first: 1 }).then(
-  function(data) {
+  function (data) {
     const assets = data.edges;
 
-    SendIntentAndroid.isAppInstalled("com.instagram.android").then(function(isInstalled) {
+    SendIntentAndroid.isAppInstalled("com.instagram.android").then(function (isInstalled) {
       if (!isInstalled) {
         //Instagram has not install
         return;
@@ -354,7 +355,7 @@ CameraRoll.getPhotos({ first: 1 }).then(
       SendIntentAndroid.shareImageToInstagram("image/*", encodeURI(assets[0].node.image.uri));
     });
   },
-  function(err) {
+  function (err) {
     console.error("An error occurred", err);
   }
 );
@@ -458,6 +459,12 @@ Will only show on Android version M and greater. For more details [look here](ht
 ```javascript
 SendIntentAndroid.showIgnoreBatteryOptimizationsSettings();
 ```
+
+## Donation
+
+If this project help you reduce time to develop, you can give me a cup of coffee :)
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?business=ZMAJTXD5HYWCQ&item_name=open-source+dev+react+native&currency_code=USD)
 
 ## License
 
