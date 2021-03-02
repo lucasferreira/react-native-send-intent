@@ -123,6 +123,9 @@ var SendIntentAndroid = {
     showIgnoreBatteryOptimizationsSettings() {
         RNSendIntentAndroid.showIgnoreBatteryOptimizationsSettings();
     },
+    openAppWithUri(intentUri, extras) {
+        return RNSendIntentAndroid.openAppWithUri(intentUri, extras || {});
+    },
 };
 
 module.exports = SendIntentAndroid;
