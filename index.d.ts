@@ -70,6 +70,8 @@ declare namespace SendIntentAndroid {
   const openFileChooser: (options: FileChooserOptions, title: string) => void
   const openEmailApp: () => void
   const openAllEmailApp: () => void
+  const requestIgnoreBatteryOptimizations: () => Promise<boolean>
+  const showIgnoreBatteryOptimizationsSettings: () => void
   const TEXT_PLAIN: unique symbol
   const TEXT_HTML: unique symbol
 }
