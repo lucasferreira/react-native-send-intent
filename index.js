@@ -105,8 +105,8 @@ var SendIntentAndroid = {
     openFileChooser(options, title) {
         return RNSendIntentAndroid.openFileChooser(options, title);
     },
-    openFilePicker({ type = "*/*", title = "Choose File" }, callback) {
-        return RNSendIntentAndroid.openFilePicker({ type, title }, callback);
+    openFilePicker(options, callback) {
+        return RNSendIntentAndroid.openFilePicker(options, callback);
     },
     openEmailApp() {
         RNSendIntentAndroid.openEmailApp();
