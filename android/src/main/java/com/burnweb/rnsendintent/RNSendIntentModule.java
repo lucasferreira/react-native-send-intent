@@ -336,8 +336,13 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void sendText(String text, String type) {
+    public void sendText(String text, String type, String packageName) {
       final Intent sendIntent = this.getSendIntent(text, type);
+
+      if (packageName != "") {
+          sendIntent.setPackage(packageName);
+      }
+
       //Check that an app exists to receive the intent
       if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
         this.reactContext.runOnUiQueueThread(new Runnable(){
@@ -349,8 +354,12 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void sendTextWithTitle(final String title, String text, String type) {
+    public void sendTextWithTitle(final String title, String text, String type, String packageName) {
       final Intent sendIntent = this.getSendIntent(text, type);
+
+      if (packageName != "") {
+          sendIntent.setPackage(packageName);
+      }
 
       //Check that an app exists to receive the intent
       if (sendIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {

@@ -5,6 +5,7 @@ declare namespace SendIntentAndroid {
       title: string
       text: string
       type: TextType
+      package?: string
   }
 
   interface CalendarEventConfig {
