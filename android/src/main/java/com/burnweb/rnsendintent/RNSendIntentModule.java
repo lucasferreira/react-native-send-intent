@@ -729,7 +729,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
             intent.setDataAndType(Uri.fromFile(fileUrl), options.getString("type"));
         }
 
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION);
         Activity currentActivity = getCurrentActivity();
         if (currentActivity != null) {
             currentActivity.startActivity(Intent.createChooser(intent, title));
