@@ -73,6 +73,7 @@ declare namespace SendIntentAndroid {
   const openAllEmailApp: () => void
   const requestIgnoreBatteryOptimizations: () => Promise<boolean>
   const showIgnoreBatteryOptimizationsSettings: () => void
+  const openAppWithUri: (intentUri: string, extras?: { [index: string]: string }) => Promise<boolean>
   const TEXT_PLAIN: unique symbol
   const TEXT_HTML: unique symbol
 }
