@@ -10,9 +10,9 @@ var SendIntentAndroid = {
     TEXT_HTML: Platform.OS === "android" ? RNSendIntentAndroid.TEXT_HTML : "text/html",
     sendText(config) {
         if ("title" in config && config.title != null && config.title.length > 0) {
-            RNSendIntentAndroid.sendTextWithTitle(config.title, config.text, config.type || "text/plain");
+            RNSendIntentAndroid.sendTextWithTitle(config.title, config.text, config.type || "text/plain", config.package || '');
         } else {
-            RNSendIntentAndroid.sendText(config.text, config.type || "text/plain");
+            RNSendIntentAndroid.sendText(config.text, config.type || "text/plain", config.package || '');
         }
     },
     sendPhoneCall(phoneNumber, phoneAppOnly = false) {
