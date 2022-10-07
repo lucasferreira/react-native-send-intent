@@ -15,6 +15,7 @@ import android.os.PowerManager;
 import android.provider.CalendarContract.Calendars;
 import android.provider.CalendarContract.Events;
 import android.provider.CalendarContract;
+import android.provider.AlarmClock;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -851,6 +852,20 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
         } catch (Exception e) {
             promise.resolve(false);
         }
+    }
+
+    @ReactMethod
+    public void createAlarm( int hour, int minutes, String message) {
+    Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM)
+            .putExtra(AlarmClock.EXTRA_MESSAGE, message)
+            .putExtra(AlarmClock.EXTRA_HOUR, hour)
+            .putExtra(AlarmClock.EXTRA_MINUTES, minutes);
+
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+      if (intent.resolveActivity(this.reactContext.getPackageManager()) != null) {
+          this.reactContext.startActivity(intent);
+      }
     }
 
     private final ActivityEventListener mActivityEventListener = new BaseActivityEventListener() {

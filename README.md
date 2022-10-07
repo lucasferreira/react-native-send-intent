@@ -438,6 +438,18 @@ SendIntentAndroid.getPhoneNumber().then(phoneNumber => {
 });
 ```
 
+## Example / Create alarm
+
+Please add this line to your AndroidManifest.xml file before using next example:
+
+```xml
+  <uses-permission android:name="android.alarm.permission.SET_ALARM" />
+```
+
+```javascript
+SendIntentAndroid.createAlarm(24, 60 ,"Your alarm message");
+```
+
 ## Example / Request 'ignore battery optimizations'
 
 Please add this line to your AndroidManifest.xml file before using next example:
