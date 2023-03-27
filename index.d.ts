@@ -59,7 +59,7 @@ declare namespace SendIntentAndroid {
   const openMapsWithRoute: (query: string, mode: string)=> void
   const shareTextToLine: (options: TextToLineOptions)=> void
   const shareImageToInstagram: (mimeType: string, mediaPath: string) => void
-  const openSettings: (settingsName: string) => void
+  const openSettings: (settingsName: string, uri?: string) => void
   const getVoiceMailNumber: () => Promise<string>
   const getPhoneNumber: () => Promise<string>
   const gotoHomeScreen: () => void

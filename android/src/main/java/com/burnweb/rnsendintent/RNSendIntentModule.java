@@ -703,9 +703,17 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
 
     }
 
+
     @ReactMethod
-    public void openSettings(String screenName) {
-        Intent settingsIntent = new Intent(screenName);
+    public void openSettings(String screenName, String uriString) {
+        Intent settingsIntent;
+        if (uriString != null){
+            uri = new Uri.parse(uriString)
+            settingsIntent = new Intent(screenName, uri);
+        } else {
+            settingsIntent = new Intent(screenName);
+        }
+
         settingsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         if (settingsIntent.resolveActivity(this.reactContext.getPackageManager()) != null) {
