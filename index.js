@@ -68,8 +68,8 @@ var SendIntentAndroid = {
     shareImageToInstagram(type, mediaPath) {
         RNSendIntentAndroid.shareImageToInstagram(type, mediaPath);
     },
-    openSettings(settingsName) {
-        RNSendIntentAndroid.openSettings(settingsName);
+    openSettings(settingsName, uri = null) {
+        RNSendIntentAndroid.openSettings(settingsName, uri);
     },
     getVoiceMailNumber() {
         return RNSendIntentAndroid.getVoiceMailNumber();

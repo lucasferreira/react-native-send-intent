@@ -371,6 +371,12 @@ Opens a specified settings screen when passed one of the constant values availab
 SendIntentAndroid.openSettings("android.settings.SECURITY_SETTINGS");
 ```
 
+Opening settings that require app package id uri
+
+```javascript
+SendIntentAndroid.openSettings("android.settings.MANAGE_APP_ALL_FILES_ACCESS_PERMISSION", "package:<your_app_package_id>);
+```
+
 ## Example / Get voiceMail number
 
 Please add this line to your AndroidManifest.xml file before using next example:
