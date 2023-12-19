@@ -847,7 +847,7 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
                 marketIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 this.reactContext.startActivity(marketIntent);
             }
-            promise.resolve(true);
+            promise.resolve(intent.getPackage());
         } catch (Exception e) {
             promise.resolve(false);
         }
